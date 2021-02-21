@@ -6,20 +6,20 @@ import pytz
 from odoo.exceptions import UserError
 from odoo.addons.base.models import ir_sequence
 
+
 class IrSequence(models.Model):
     _inherit = 'ir.sequence'
 
-    
-    def _get_prefix_suffix(self, prefix=False, suffix=False):
+    def _get_prefix_suffix(self, date=None, date_range=None, prefix=False, suffix=False):
         def _interpolate(s, d):
             return (s % d) if s else ''
 
         def _interpolation_dict():
             now = range_date = effective_date = datetime.now(pytz.timezone(self._context.get('tz') or 'UTC'))
-            if self._context.get('ir_sequence_date'):
-                effective_date = datetime.strptime(str(self._context.get('ir_sequence_date')), '%Y-%m-%d')
-            if self._context.get('ir_sequence_date_range'):
-                range_date = datetime.strptime(str(self._context.get('ir_sequence_date_range')), '%Y-%m-%d')
+            if date or self._context.get('ir_sequence_date'):
+                effective_date = datetime.strptime(str(date or self._context.get('ir_sequence_date')), '%Y-%m-%d')
+            if date_range or self._context.get('ir_sequence_date_range'):
+                range_date = datetime.strptime(str(date_range or self._context.get('ir_sequence_date_range')), '%Y-%m-%d')
 
             sequences = {
                 'year': '%Y', 'month': '%m', 'day': '%d', 'y': '%y', 'doy': '%j', 'woy': '%W',
@@ -31,7 +31,7 @@ class IrSequence(models.Model):
                 res['range_' + key] = range_date.strftime(format)
                 res['current_' + key] = now.strftime(format)
                 
-            res.update({'prefix':prefix if prefix else "",'suffix':suffix if suffix else ""})
+            res.update({'prefix': prefix if prefix else "", 'suffix': suffix if suffix else ""})
             return res
 
         d = _interpolation_dict()
@@ -43,8 +43,9 @@ class IrSequence(models.Model):
         return interpolated_prefix, interpolated_suffix
     
     def get_next_char(self, number_next, prefix=False, suffix=False):
-        interpolated_prefix, interpolated_suffix = self._get_prefix_suffix(prefix, suffix)
+        interpolated_prefix, interpolated_suffix = self._get_prefix_suffix(prefix=prefix, suffix=suffix)
         return interpolated_prefix + '%%0%sd' % self.padding % number_next + interpolated_suffix
+
 
 class IrSequenceDateRange(models.Model):
     _inherit = 'ir.sequence.date_range'
@@ -59,4 +60,4 @@ class IrSequenceDateRange(models.Model):
             number_next = ir_sequence._update_nogap(self, self.sequence_id.number_increment)
             
         return self.sequence_id.get_next_char(number_next, self.prefix, self.suffix)
-    
+
