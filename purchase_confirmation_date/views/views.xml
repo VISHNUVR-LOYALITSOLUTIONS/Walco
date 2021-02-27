@@ -40,7 +40,7 @@
 <!--                  parent="hr_payroll.menu_hr_payroll_configuration" action="update_state_to_batch_action"/>-->
 
 
-      <record id="view_sale_order_confirmation_date" model="ir.ui.view">
+      <record id="view_purchase_order_confirmation_date" model="ir.ui.view">
         <field name="name">purchase.order.form</field>
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
