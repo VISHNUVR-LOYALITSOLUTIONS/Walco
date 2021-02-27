@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_confirmation_date_purchase_confirmation_date,purchase_confirmation_date.purchase_confirmation_date,model_purchase_confirmation_date_purchase_confirmation_date,base.group_user,1,1,1,1
