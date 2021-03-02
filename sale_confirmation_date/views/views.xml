@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+
+
+             <record id="update_confirmation_date_action" model="ir.ui.view">
+            <field name="name">Update Confirmation Date</field>
+            <field name="model">confirmation.date</field>
+            <field name="arch" type="xml">
+
+
+                 <form string="Confirm Order">
+
+            <group>
+                <field name="sale_id" invisible="1"/>
+                <field name="confirmation_date"/>
+
+            </group>
+            <footer>
+                <button type="object" name="confirm"
+                        string="Confirm Sale" class="btn-primary"/>
+                <button special="cancel" string="Annuler" class="btn-default"/>
+            </footer>
+        </form>
+
+            </field>
+        </record>
+
+
+
+       <record id="update_confirmation_date_action" model="ir.actions.act_window">
+        <field name="name">Confirmation Date</field>
+        <field name="res_model">confirmation.date</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="update_confirmation_date_action"/>
+        <field name="target">new</field>
+    </record>
+
+
+<!--      <menuitem id="update_state_for_action_window" name="Confirmation Date"-->
+<!--                  parent="hr_payroll.menu_hr_payroll_configuration" action="update_state_to_batch_action"/>-->
+
+
+      <record id="view_sale_order_confirmation_date" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+             <field name="payment_term_id" position="after">
+                     <field name="confirmation_date"/>
+
+                </field>
+             <xpath expr="//header/button[@name='action_confirm']" type="object" states="draft" position="attributes">
+            <attribute name="name">sale_confirm_wizard_button</attribute>
+        </xpath>
+        <xpath expr="//header/button[@name='action_confirm']" type="object" states="sent" position="attributes">
+            <attribute name="name">sale_confirm_wizard_button</attribute>
+        </xpath>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>
