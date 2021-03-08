@@ -13,9 +13,9 @@
                             <field name="ref" readonly="1" force_save="1"/>
                 </xpath>
 
-               <xpath expr="//sheet/notebook/page[@name='sales_purchases']/group/group[@name='misc']/field[@name='ref']" position="attributes">
+             <!--   <xpath expr="//sheet/notebook/page[@name='sales_purchases']/group/group[@name='misc']/field[@name='ref']" position="attributes">
                  <attribute name="readonly">1</attribute>
-                </xpath>
+                </xpath> -->
 
 
             </field>
