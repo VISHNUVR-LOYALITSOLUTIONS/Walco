@@ -241,11 +241,11 @@
                     </div>
                 </div>
 
-                  <div class="row">
+                  <div class="row" style="page-break-inside: avoid;">
 
-                   <div class="col-12">
-                       <div class="text-center" >
-                            <table style="font-weight:bold;" class="en-font">
+                   <div class="col-12" style="page-break-inside: avoid;">
+                       <div class="text-center" style="page-break-inside: avoid;">
+                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">
                                 <tr class="en-font">
                                     <td class="en-font" colspan="2" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding:2px;">
                                         <b><span>Declaration</span></b>

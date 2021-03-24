@@ -126,7 +126,7 @@
                                                      <b>Invoice To</b><br/>
 
                                                 <t t-if="o.company_id.partner_id">
-                                              <t t-esc="o.company_id.partner_id" t-options='{ "widget": "contact", "fields": [ "name", "address"],"no_marker": True,}'/><br/>
+                                              <t t-esc="o.company_id.partner_id" t-options='{ "widget": "contact", "fields": [ "name", "address"],"no_marker": True,}'/>
                                                      TEL : <t t-esc="o.company_id.phone"/><br/>
                                                     E-Mail : <t t-esc="o.company_id.email"/>
 
