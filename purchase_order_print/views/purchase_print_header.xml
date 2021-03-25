@@ -108,6 +108,7 @@
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.order_line" t-as="l" style="padding:5px;">
+                                         <t t-if="not l.display_type">
                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
                                             <t t-esc="l_index+1"/>
                                         </td>
@@ -148,8 +149,43 @@
                                                <t t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
 <!--                                             <t t-esc="l.price_subtotal"/>-->
                                         </td>
+                                         </t>
+
+                                         <t t-if="l.display_type == 'line_section'">
+
+
+                                             <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                            <t t-esc="l_index+1"/>
+                                        </td>
+
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                    <span t-field="l.name"/>
+                                                </span>
+
+
+                                        </td>
+
+                            </t>
+                            <t t-if="l.display_type == 'line_note'">
+
+                                <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                    <t t-esc="l_index+1"/>
+
+                                        </td>
+
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                   <span t-field="l.name"/>
+                                                </span>
+
+
+                                        </td>
+
+                            </t>
 
                                     </tr>
+
 
 
                                      <tr style="text-align:center; font-weight:bold;padding:5px;">
