@@ -51,9 +51,9 @@
 <!--                        th, td {-->
 <!--                        padding: 3px;-->
 <!--                        }-->
-<!--                        tr{-->
-<!--                        page-break-inside: avoid;-->
-<!--                        }-->
+                       divd#break, tr{
+                        page-break-inside: avoid;
+                        }
                         table {
                         width: 100%;
                         }
@@ -62,10 +62,10 @@
 
 <div class="row">
     <div class="col-12">
-        <table style="font-size: 13px;padding:5px;"
+        <table style="font-size: 14px;padding:5px;"
                                    width="100%;">
-                                 <tr class="en-font" style="padding:5px;font-size: 13px;">
-                                     <td colspan="8" style="border:1px solid black;padding:5px;font-size: 13px;">
+                                 <tr class="en-font" style="padding:5px;font-size: 14px;">
+                                     <td colspan="8" style="border:1px solid black;padding:5px;font-size: 14px;">
                                           <div class="en-font" style="font-weight:bold;">Supplier</div>
                                     <p class="en-font">
                                     <t t-if="o.partner_id" class="en-font">
@@ -85,10 +85,10 @@
                                         <div class="row">
                         <div class="col-12">
 
-                              <table style="font-size: 13px; margin-top: 15px;"
+                              <table style="font-size: 14px; margin-top: 15px;"
                                    width="100%;" cellspacing="0" borderspacing="0">
 
-<!--                            <table border="0" style="font-size: 13px;" width="100%;">-->
+<!--                            <table border="0" style="font-size: 14px;" width="100%;">-->
                                 <thead>
 
                                     <tr style="text-align:center; font-weight:bold;padding:5px;">
@@ -222,74 +222,90 @@
 
                         </div>
                     </div>
-                     <div class="row">
-                    <div class="col-12" align="left" style="font-weight:bold;padding:5px;font-size:13px;">
 
-                        <div class="en-font">
-                            <u class="en-font">
-                            <b>
-                                Terms &amp;amp; Conditions :-
-                            </b>
-                        </u>
-                        <br></br>
+                               <div class="row">
+         <div class="col-12">
+                    <table border="0" style="font-size: 14px;padding:5px;page-break-inside: avoid;"
+                                   width="100%;">
+                                 <tr class="en-font" style="padding:5px;font-size: 14px;">
+                                     <td colspan="8" style="padding:5px;font-size: 14px;">
+                                          <div class="en-font" style="font-weight:bold;font-size: 14px;">
+                                             <u class="en-font">
+                                                 <b>
+                                                    Terms &amp;amp; Conditions :-
+                                                </b><br/>
+                                             </u>
+                                          </div>
 
-                        <pre class="en-font" style="font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;">
-                            <t t-esc="o.notes"/>
-                        </pre>
-                        </div>
+                                     </td>
+                                 </tr>
+                                     <tr class="en-font" style="padding:5px;font-size: 14px;">
+                                     <td colspan="8" style="padding:5px;font-size: 14px;">
+                                          <div class="en-font" style="font-weight:bold;font-size: 14px;">
+                                             <pre id="break" class="en-font" style="font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;page-break-inside: avoid;">
+                                             <t t-esc="o.notes"/>
+                                                </pre>
+                                          </div>
 
-                    </div>
-                </div>
+                                     </td>
+                                 </tr>
 
-                 <div class="row" style="page-break-inside: avoid;">
+                             </table>
+    </div>
+</div>
 
-                   <div class="col-12" style="page-break-inside: avoid;">
-                       <div class="text-center" style="page-break-inside: avoid;">
-                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">
-                                <tr class="en-font">
-                                    <td class="en-font" colspan="2" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding:2px;">
-                                        <b><span>Declaration</span></b>
-                                    </td>
-                                </tr>
-                                <tr class="en-font">
-                                    <td class="en-font" width="70%" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding-left:3px;">
-                                        <p>
-                                    We request our vendors to confirm your acceptence to our terms of purchases as per the PO.
-                                            if you have any difference of opinion about thr terms and conditions,you may please notify us.
-                                        </p>
-                                    </td>
-                                    <td class="en-font" width="30%" style="font-size:13px;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:center:verticle-align:top;">
-                                        for <t t-esc="o.company_id.name"/>
-                                    </td>
-                                </tr>
-                                <tr class="en-font">
-                                    <td class="en-font" width="70%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
-                                    <td class="en-font" width="30%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
 
-                                </tr>
 
-                                 <tr style="vertical-align: bottom;font-weight:bold;">
-                                    <td class="en-font" width="70%" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-top:0px;border-bottom:1px solid black;border-collapse:collapse;text-align:center:verticle-align:bottom;">
 
-                                        <table width="100%" style="vertical-align: bottom;">
-                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">
-                                                Prepared By
-                                            </td>
-                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">
-                                               Checked By
-                                            </td>
-                                        </table>
+<!--                 <div class="row" style="page-break-inside: avoid;">-->
 
-                                    </td>
-                                    <td class="en-font" width="30%" style="font-size:13px;border-bottom:1px solid black;border-right:1px solid black;border-collapse:collapse;border-top:0px;text-align:center:verticle-align:bottom;">
-                                        Authorised Signatory
-                                    </td>
-                                </tr>
-                            </table>
-                   </div>
+<!--                   <div class="col-12" style="page-break-inside: avoid;">-->
+<!--                       <div class="text-center" style="page-break-inside: avoid;">-->
+<!--                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" colspan="2" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding:2px;">-->
+<!--                                        <b><span>Declaration</span></b>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" width="70%" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding-left:3px;">-->
+<!--                                        <p>-->
+<!--                                    We request our vendors to confirm your acceptence to our terms of purchases as per the PO.-->
+<!--                                            if you have any difference of opinion about thr terms and conditions,you may please notify us.-->
+<!--                                        </p>-->
+<!--                                    </td>-->
+<!--                                    <td class="en-font" width="30%" style="font-size:13px;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:center:verticle-align:top;">-->
+<!--                                        for <t t-esc="o.company_id.name"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" width="70%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>-->
+<!--                                    <td class="en-font" width="30%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>-->
 
-                    </div>
-                  </div>
+<!--                                </tr>-->
+
+<!--                                 <tr style="vertical-align: bottom;font-weight:bold;">-->
+<!--                                    <td class="en-font" width="70%" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-top:0px;border-bottom:1px solid black;border-collapse:collapse;text-align:center:verticle-align:bottom;">-->
+
+<!--                                        <table width="100%" style="vertical-align: bottom;">-->
+<!--                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">-->
+<!--                                                Prepared By-->
+<!--                                            </td>-->
+<!--                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">-->
+<!--                                               Checked By-->
+<!--                                            </td>-->
+<!--                                        </table>-->
+
+<!--                                    </td>-->
+<!--                                    <td class="en-font" width="30%" style="font-size:13px;border-bottom:1px solid black;border-right:1px solid black;border-collapse:collapse;border-top:0px;text-align:center:verticle-align:bottom;">-->
+<!--                                        Authorised Signatory-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
+<!--                   </div>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
 
 
 

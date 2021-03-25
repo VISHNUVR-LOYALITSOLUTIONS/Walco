@@ -238,11 +238,61 @@
 
             </div>
 
-<!--                      <div class="footer">-->
+                      <div class="footer">
 
+                <div class="last-page">
+                            <div class="row" style="page-break-inside: avoid;">
 
+                   <div class="col-12" style="page-break-inside: avoid;">
+                       <div class="text-center" style="page-break-inside: avoid;">
+                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">
+                                <tr class="en-font">
+                                    <td class="en-font" colspan="2" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding:2px;">
+                                        <b><span>Declaration</span></b>
+                                    </td>
+                                </tr>
+                                <tr class="en-font">
+                                    <td class="en-font" width="70%" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding-left:3px;">
+                                        <p>
+                                    We request our vendors to confirm your acceptence to our terms of purchases as per the PO.
+                                            if you have any difference of opinion about thr terms and conditions,you may please notify us.
+                                        </p>
+                                    </td>
+                                    <td class="en-font" width="30%" style="font-size:13px;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:center:verticle-align:top;">
+                                        for <t t-esc="o.company_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr class="en-font">
+                                    <td class="en-font" width="70%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
+                                    <td class="en-font" width="30%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
 
-<!--            </div>-->
+                                </tr>
+
+                                 <tr style="vertical-align: bottom;font-weight:bold;">
+                                    <td class="en-font" width="70%" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-top:0px;border-bottom:1px solid black;border-collapse:collapse;text-align:center:verticle-align:bottom;">
+
+                                        <table width="100%" style="vertical-align: bottom;">
+                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">
+                                                Prepared By
+                                            </td>
+                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">
+                                               Checked By
+                                            </td>
+                                        </table>
+
+                                    </td>
+                                    <td class="en-font" width="30%" style="font-size:13px;border-bottom:1px solid black;border-right:1px solid black;border-collapse:collapse;border-top:0px;text-align:center:verticle-align:bottom;">
+                                        Authorised Signatory
+                                    </td>
+                                </tr>
+                            </table>
+                   </div>
+
+                    </div>
+                  </div>
+                </div>
+
+            </div>
 
 
         </template>
