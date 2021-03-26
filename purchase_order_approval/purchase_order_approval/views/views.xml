@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="purchase_order_approval_form" model="ir.ui.view">
+            <field name="name">purchase.order.approval.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <button name="button_cancel" position="attributes">
+                    <attribute name="states">draft,to approve,sent,purchase,cancel,waiting_for_manager_approval,waiting_for_director_approval,waiting_for_purchase_director_approval,waiting_for_financial_approval
+                    </attribute>
+                </button>
+
+                <button name="button_confirm" id="draft_confirm" position="attributes">
+                    <attribute name="states">draft,waiting_for_financial_approval</attribute>
+                </button>
+
+                <button name="button_draft" position="attributes">
+                    <attribute name="states">cancel,refused</attribute>
+                </button>
+
+                <button name="button_confirm" position="after">
+                    <button name="button_manager_approval" type="object" states='waiting_for_manager_approval'
+                            groups="purchase_order_approval.group_operation_manager"
+                            string="Manager Approval"
+                            class="oe_highlight"/>
+                    <button name="button_director_approval" type="object" states='waiting_for_director_approval'
+                            groups="purchase_order_approval.group_cozmedics_director"
+                            string="Director Approval"
+                            class="oe_highlight"/>
+                    <button name="button_purchase_director_approval" type="object" states='waiting_for_purchase_director_approval'
+                            groups="purchase_order_approval.group_purchase_director"
+                            string="Purchase Director Approval"
+                            class="oe_highlight"/>
+                    <button name="button_refuse" type="object" states="waiting_for_manager_approval,waiting_for_director_approval,waiting_for_purchase_director_approval,waiting_for_financial_approval"
+                            groups="purchase_order_approval.group_operation_manager,purchase_order_approval.group_cozmedics_director,purchase_order_approval.group_purchase_director,purchase_order_approval.group_finance_manager"
+                            string="Refuse"/>
+                </button>
+
+            </field>
+        </record>
+
+
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="domain">[('state','in',('waiting_for_manager_approval','waiting_for_director_approval',
+               'waiting_for_purchase_director_approval','waiting_for_financial_approval', 'refused',
+                'to approved','purchase', 'done'))]
+            </field>
+        </record>
+
+        <record id="po_approval_res_company_form" model="ir.ui.view">
+            <field name="name">PO.approval.res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="favicon" position="after">
+                    <field name="po_approval"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

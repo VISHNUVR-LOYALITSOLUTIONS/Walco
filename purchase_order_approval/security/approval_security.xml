@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_operation_manager" >
+                <field name="name">Operation Manager</field>
+        </record>
+
+        <record model="res.groups" id="group_cozmedics_director" >
+                <field name="name">COZMEDICS Director</field>
+        </record>
+
+
+        <record model="res.groups" id="group_purchase_director" >
+                <field name="name">Purchase Director</field>
+        </record>
+
+        <record model="res.groups" id="group_finance_manager" >
+                <field name="name">Finance Manager</field>
+        </record>
+
+    </data>
+</odoo>
