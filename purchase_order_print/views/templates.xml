@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+
+        <record id="view_company_form_l10n_sg" model="ir.ui.view">
+            <field name="name">l10n_sg.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='email']" position="after">-->
+<!--                  <field name="report_file"/>-->
+<!--                </xpath>-->
+                <xpath expr="//sheet/notebook/page/group/group/field[@name='favicon']" position="after">
+                        <field name="report_file"/>
+                </xpath>
+            </field>
+        </record>
+  <record id="view_purchase_order_due_date" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+             <field name="payment_term_id" position="after">
+                     <field name="due_on_date"/>
+                 <field name="destination"/>
+
+                </field>
+        </field>
+  </record>
+    </data>
+</odoo>
