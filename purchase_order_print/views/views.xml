@@ -11,7 +11,7 @@
 
 
         <record id="walco_purchase_order_print" model="ir.actions.report">
-            <field name="pdf_watermark"/>
+            <field name="pdf_watermark" type="base64" file="purchase_order_print/static/description/src/img/header___footer-1.jpg"/>
 <!--            file="purchase_order_print/static/description/src/img/header1.jpeg"-->
         </record>
 
