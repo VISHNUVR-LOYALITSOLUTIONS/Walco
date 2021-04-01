@@ -43,11 +43,11 @@ class SaleOrder(models.Model):
 
     stock_date = fields.Datetime(string='Date')
 
-    @api.onchange('stock_date')
+    @api.onchange('stock_date','date_order')
     def _onchange_stock_date(self):
         for i in self:
-            if i.stock_date:
-                i.stock_date = i.date_order
+            # if i.stock_date:
+            i.stock_date = i.date_order
 
     def action_confirm(self):
 
@@ -66,6 +66,20 @@ class SaleOrder(models.Model):
                                      })
 
         return super(SaleOrder, self).action_confirm()
+
+    def _action_confirm(self):
+        """ On SO confirmation, some lines should generate a task or a project. """
+        result = super(SaleOrder, self)._action_confirm()
+        for order in self:
+
+            order.picking_ids.write({
+
+                'scheduled_date': order.stock_date,
+                'stock_force_date': order.stock_date,
+                # 'stock_force_date': order.date_order,
+
+            })
+        return result
 
 class confirmationState(models.TransientModel):
     _inherit = 'confirmation.date'
@@ -107,4 +121,5 @@ class StockMove(models.Model):
     def _get_new_picking_values(self):
         vals = super(StockMove, self)._get_new_picking_values()
         vals['stock_force_date'] = self.mapped('sale_line_id.order_id.stock_date')[0]
+        vals['scheduled_date'] = self.mapped('sale_line_id.order_id.stock_date')[0]
         return vals
