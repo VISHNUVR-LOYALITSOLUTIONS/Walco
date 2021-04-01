@@ -2,7 +2,7 @@
   <data>
 
 
-             <record id="update_confirmation_date_action" model="ir.ui.view">
+             <record id="sale_update_confirmation_date_action" model="ir.ui.view">
             <field name="name">Update Confirmation Date</field>
             <field name="model">confirmation.date</field>
             <field name="arch" type="xml">
@@ -18,7 +18,7 @@
             <footer>
                 <button type="object" name="confirm"
                         string="Confirm Sale" class="btn-primary"/>
-                <button special="cancel" string="Annuler" class="btn-default"/>
+                <button special="cancel" string="Cancel" class="btn-default"/>
             </footer>
         </form>
 
@@ -31,7 +31,7 @@
         <field name="name">Confirmation Date</field>
         <field name="res_model">confirmation.date</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="update_confirmation_date_action"/>
+        <field name="view_id" ref="sale_update_confirmation_date_action"/>
         <field name="target">new</field>
     </record>
 
@@ -47,9 +47,21 @@
         <field name="arch" type="xml">
 
              <field name="payment_term_id" position="after">
-                     <field name="confirmation_date"/>
+                     <field name="confirmation_date" invisible="1"/>
 
                 </field>
+
+<!--        <xpath expr="/form/sheet/group/group/field[@name='date_order']" position="attributes">-->
+<!--            <attribute name="invisible">0</attribute>-->
+<!--        </xpath>-->
+
+            <xpath expr="/form/sheet/group/group/field[@name='date_order']" position="attributes">
+                 <attribute name="groups"></attribute>
+                 <attribute name="nolabel">0</attribute>
+
+<!--                 <field name="date_order" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>-->
+        </xpath>
+
              <xpath expr="//header/button[@name='action_confirm']" type="object" states="draft" position="attributes">
             <attribute name="name">sale_confirm_wizard_button</attribute>
         </xpath>
