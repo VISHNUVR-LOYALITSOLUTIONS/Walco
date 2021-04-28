@@ -106,6 +106,27 @@ class PurchaseOrder(models.Model):
         })
         return res
 
+    # def _create_stock_moves(self, picking):
+    #     res = super(PurchaseOrder, self)._create_stock_moves()
+    #     # for purchase in res:
+    #     for picking in self.picking_ids:
+    #         picking.update({
+    #                 'scheduled_date': self.date_order,
+    #                 'stock_force_date': self.date_order
+    #             })
+    #     return res
+
+
+    def _create_picking(self):
+        res = super(PurchaseOrder, self)._create_picking()
+        for i in self.picking_ids:
+            i.write({
+                'scheduled_date': self.date_order,
+                'stock_force_date': self.date_order
+            })
+
+        return res
+
 # class StockRuleInherit(models.Model):
 #     _inherit = 'stock.rule'
 #
@@ -113,6 +134,7 @@ class PurchaseOrder(models.Model):
 #         res = super(StockRuleInherit, self)._get_stock_move_values(product_id, product_qty, product_uom, location_id,
 #                                                            name, origin, values, group_id)
 #         res['stock_force_date'] = group_id['group_id'].sale_id.stock_date
+#         res['scheduled_date'] = group_id['group_id'].sale_id.stock_date
 #         return res
 
 class StockMove(models.Model):
