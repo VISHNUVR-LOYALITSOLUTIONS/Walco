@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record model="res.groups" id="usergroup_customer_vendor" >
+                <field name="name">Customer/Vendor Creation</field>
+        </record>
+
+    </data>
+</odoo>
