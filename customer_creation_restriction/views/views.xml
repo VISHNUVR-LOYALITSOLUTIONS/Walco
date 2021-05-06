@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+             <record id="customer_creation_restriction_form_view" model="ir.ui.view">
+                 <field name="name">res.partner.customer.creation</field>
+                 <field name="model">res.partner</field>
+                  <field name="inherit_id" ref="base.view_partner_form"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('customer_creation_restriction.usergroup_customer_vendor')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//form" position="attributes">
+                     <attribute name="create">false</attribute>
+<!--                       <attribute name="edit">false</attribute>-->
+                   </xpath>
+                 </field>
+               </record>
+
+      <record id="customer_creation_restriction_kanban_view" model="ir.ui.view">
+                 <field name="name">res.partner.customer.creation</field>
+                 <field name="model">res.partner</field>
+                  <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('customer_creation_restriction.usergroup_customer_vendor')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//kanban" position="attributes">
+                     <attribute name="create">false</attribute>
+<!--                       <attribute name="edit">false</attribute>-->
+                   </xpath>
+                 </field>
+               </record>
+
+      <record id="customer_creation_restriction_tree_view" model="ir.ui.view">
+                 <field name="name">res.partner.customer.creation</field>
+                 <field name="model">res.partner</field>
+                  <field name="inherit_id" ref="base.view_partner_tree"/>
+                 <field name="groups_id" eval="[(6, 0, [ref('customer_creation_restriction.usergroup_customer_vendor')])]"/>
+                  <!--<field name="groups" eval="[(4, ref('rooms_hr_users_security.employee_create_button'))]"/>-->
+                 <field name="arch" type="xml">
+                   <xpath expr="//tree" position="attributes">
+                     <attribute name="create">false</attribute>
+<!--                       <attribute name="edit">false</attribute>-->
+                   </xpath>
+                 </field>
+               </record>
+
+
+
+  </data>
+</odoo>
