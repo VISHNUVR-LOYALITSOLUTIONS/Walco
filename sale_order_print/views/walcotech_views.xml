@@ -1,0 +1,375 @@
+<odoo>
+    <data>
+
+
+        <report
+    id="walcotech_sale_order_print"
+    model="sale.order"
+    string="Walcotech Sale Order Print"
+    report_type="qweb-pdf"
+    name="sale_order_print.walcotech_sale_template"
+    file="sale_order_print.walcotech_sale_template"
+    />
+
+
+                <record id="paperformat_walcotech_sale_print" model="report.paperformat">
+            <field name="name">SALE PRINT</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">80</field>
+            <field name="margin_bottom">70</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">50</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+
+
+
+        <record id="walcotech_sale_order_print" model="ir.actions.report">
+            <field name="pdf_watermark" type="base64" file="sale_order_print/static/description/src/img/header___footer-1.jpg"/>
+            <field name="paperformat_id" ref="sale_order_print.paperformat_walcotech_sale_print"/>
+
+<!--            file="purchase_order_print/static/description/src/img/header1.jpeg"-->
+        </record>
+
+
+<!--        <record id="walco_purchase_order_print" model="ir.actions.report">-->
+<!--            <field name="pdf_watermark"/>-->
+<!--        </record>-->
+
+        <odoo>
+            <data>
+
+
+                 <template id="walcotech_sale_layout_header_my">
+
+
+
+              <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+
+              <div style="font-size : 58px;width:100%" class="header">
+
+                                      <style type="text/css">
+<!--                        .Row {-->
+<!--                        display: table;-->
+<!--                        width: 100%; /*Optional*/-->
+<!--                        }-->
+
+
+                        @font-face {
+                        font-family: 'calibri';
+                         src: local('calibri'), local('calibri'),
+                        src: url('/sale_order_print/static/src/fonts/calibri/Calibri.ttf') format('opentype');
+                        }
+
+                        @font-face {
+                        font-family: 'Countryside';
+                         src: local('Countryside'), local('Countryside'),
+                        src: url('/sale_order_print/static/src/fonts/countryside-font/CountrysideTwo-r9WO.ttf') format('truetype');
+                        }
+
+                        @font-face {
+                        font-family: 'Arial';
+                        src: local('Arial'), local('Arial'),
+                        src: url(/sale_order_print/static/src/fonts/arial.ttf') format('truetype');
+                        }
+                        @font-face {
+                        font-family: 'Verdana';
+                        src: url(/sale_order_print/static/src/fonts/verdana.ttf') format('truetype');
+                        }
+
+                        .arabic-font {
+                        font-family: arial;
+                        }
+
+                        .en-font {
+                        font-family: arial;
+                        }
+                        tr,th, td {
+                    padding-left: 3px;
+                    padding-left: 3px;
+                    }
+<!--                        th, td {-->
+<!--                        padding: 3px;-->
+<!--                        }-->
+<!--                        tr{-->
+<!--                        page-break-inside: avoid;-->
+<!--                        }-->
+                        table {
+                        width: 100%;
+                        }
+                    </style>
+
+
+<!--                  <div style="position: absolute;opacity: 0.15;z-index: 1000;width: 100%;">-->
+<!--                <t t-if = "company.upload_image">-->
+<!--                    <img t-if="company.upload_image" t-att-src="'data:image/png;base64,%s' % to_text(company.upload_image)" style="top:100px;position:absolute;width:100%;height:9500px;opacity:0.90;z-index:-1000;"/>-->
+<!--                </t>-->
+<!--            </div>-->
+
+                   <div class="row">
+                    <div class="col-12" style="text-align: center;font-size:18px;">
+
+                        <b>
+                            <b class="en-font" style="font-size:16px;">SALE ORDER</b>
+                        </b>
+
+                    </div>
+                </div>
+
+
+                 <div class="row">
+
+                     <div class="col-12" style="font-weight:bold;">
+
+                            <table height="150" border="0" style="width:100%;" cellspacing="0" borderspacing="0">
+                                 <tr class="en-font" style="padding:5px;" >
+                                         <td rowspan="7" class="en-font" width="50%" style="border: 1px solid black;font-size:13px;padding:5px;">
+<!--                                             <span style="float:left;align:center;verticle-align:middle;">-->
+<!--                                                 <img align="center" t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo" style="max-height: 140px;display:block;align:center;verticle-align:middle;margin-top:1cm;"/>-->
+
+<!--                                             </span>-->
+                                             <span style="float:left;text-align:left:padding:3px;verticle-align:left;">
+<!--                                                 <br/>-->
+
+                                                 <div style="text-align:left:padding:3px;verticle-align:left;">
+
+                                                     <b>Customer</b><br/>
+
+                                                <t t-if="o.partner_id">
+                                              <t t-esc="o.partner_id" t-options='{ "widget": "contact", "fields": [ "name", "address"],"no_marker": True,}'/>
+                                                     TEL : <t t-esc="o.partner_id.phone"/><br/>
+                                                    E-Mail : <t t-esc="o.partner_id.email"/>
+
+                                                </t>
+
+
+                                                 </div>
+
+                                             </span>
+                                         </td>
+<!--
+<!-                                     <td style="padding:5px;border:none;border-top: 0px;border-bottom: 0px;border-left: 0px;border-right: 0px;" width="1%"></td>-->
+                                     <td class="en-font" width="20%" style="padding:5px;border: 1px solid black;text-align:left;margin-right:5px;font-size:13px;">S.O No.</td>
+                                     <td class="en-font" align="center" width="30%" style="padding:5px;border: 1px solid black;vertical-align: middle;font-size:13px;">
+                                         <t t-esc="o.name"/>
+                                     </td>
+                                </tr>
+
+                                <tr style="padding:5px;">
+                                    <td class="en-font" style="padding:5px;border-collapse:collapse;border: 1px solid black;border-top:0px;margin-left:5px;font-size:13px;">Dated</td>
+                                    <td class="en-font" style="padding:5px;text-align:center;border-collapse:collapse;border: 1px solid black;border-top:0px;margin-left:5px;font-size:13px;">
+                                         <t t-if="o.date_order">
+                                            <t t-esc="datetime.datetime.strptime(str(o.date_order), '%Y-%m-%d %H:%M:%S').strftime('%d-%b-%Y')"/>
+                                            </t>
+                                    </td>
+                                </tr>
+
+                                <tr style="padding:5px;">
+                                    <td class="en-font" style="padding:5px;border-collapse:collapse;border: 1px solid black;text-align:left;margin-right:5px;font-size:13px;">Mode/Terms Of Payment</td>
+                                    <td class="en-font" align="center" style="padding:5px;border-collapse:collapse;border: 1px solid black;vertical-align: middle;border-top: 0px;font-size:13px;">
+                                        <t t-if="o.payment_term_id.name">
+                                         <t t-esc="o.payment_term_id.name"/>
+                                         </t>
+                                    </td>
+                                </tr>
+
+                                 <tr style="padding:5px;">
+                                     <td class="en-font" style="padding:5px;border-collapse:collapse;border: 1px solid black;border-top:0px;margin-left:5px;font-size:13px;">Customer Reference</td>
+                                     <td class="en-font" style="padding:5px;text-align:center;border-collapse:collapse;border: 1px solid black;border-top:0px;margin-left:5px;font-size:13px;">
+                                        <t t-if="o.client_order_ref">
+                                         <t t-esc="o.client_order_ref"/>
+                                         </t>
+                                     </td>
+                                </tr>
+
+                                <tr style="padding:5px;">
+                                     <td class="en-font" style="padding:5px;font-size:13px;border-collapse:collapse;border: 1px solid black;text-align:left;">
+                                       Sales Person
+                                     </td>
+                                    <td class="en-font" align="center" style="padding:5px;border-collapse:collapse;border: 1px solid black;vertical-align: middle;font-size:13px;">
+
+                                        <t t-if="o.user_id">
+                                                    <t t-esc="o.user_id.name"/>
+                                         </t>
+<!--                                            <t t-if="o.order_line">-->
+<!--                                                 <t t-foreach="o.order_line[0]" t-as="s">-->
+<!--                                                        <t t-if="s.account_analytic_id.name">-->
+<!--                                                       <t t-esc="s.account_analytic_id.name"/>-->
+<!--                                                   </t>-->
+<!--                                                   </t>-->
+
+<!--                                            </t>-->
+                                    </td>
+                                </tr>
+                                 <tr style="padding:5px;">
+                                     <td class="en-font" style="padding:5px;border-collapse:collapse;border: 1px solid black;border-top:0px;font-size:13px;">Incoterm</td>
+                                     <td class="en-font" style="padding:5px;text-align:center;border-collapse:collapse;border: 1px solid black;border-top:0px;font-size:13px;">
+                                         <t t-if="o.incoterm">
+                                                    <t t-esc="o.incoterm.name"/>
+                                         </t>
+                                     </td>
+                                </tr>
+
+
+
+
+
+<!--                                 <tr style="padding:5px;">-->
+<!--                                     <td class="en-font" style="padding:5px;border-collapse:collapse;border: 1px solid black;text-align:left;font-size:13px;margin-right:5px;">Destination</td>-->
+
+<!--                                     <td class="en-font" align="center" style="padding:5px;border-collapse:collapse;border: 1px solid black;vertical-align: middle;font-size:13px;">-->
+<!--                                         <t t-if="o.company_id.country_id.name">-->
+<!--                                         <t t-esc="o.company_id.country_id.name"/>-->
+<!--                                         </t>-->
+<!--                                         <t t-if="not o.company_id.country_id.name">-->
+<!--                                         <t t-esc="o.destination"/>-->
+<!--                                         </t>-->
+<!--                                     </td>-->
+<!--                                </tr>-->
+
+
+                            </table>
+                        </div>
+                                </div>
+
+
+            </div>
+
+
+                                          <div class="footer">
+
+                <div class="last-page">
+                            <div class="row" style="page-break-inside: avoid;">
+
+                   <div class="col-12" style="page-break-inside: avoid;">
+                       <div class="text-center" style="page-break-inside: avoid;">
+                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">
+
+                                <tr class="en-font">
+
+                                    <td class="en-font" width="50%" style="padding:3px;font-size:13px;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:left:verticle-align:top;">
+                                        FOR <t t-esc="o.company_id.name"/>
+                                    </td>
+
+                                    <td class="en-font" width="50%" style="font-size:13px;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:center:verticle-align:top;">
+                                        FOR <t t-esc="o.company_id.name"/>
+                                    </td>
+                                </tr>
+                                 <tr class="en-font">
+                                    <td class="en-font" width="50%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
+                                    <td class="en-font" width="50%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>
+
+                                </tr>
+
+                                 <tr style="vertical-align: bottom;font-weight:bold;">
+                                    <td class="en-font" width="50%" style="padding:3px;font-size:13px;border-right:1px solid black;border-left:1px solid black;border-top:0px;border-bottom:1px solid black;border-collapse:collapse;text-align:left:verticle-align:bottom;">
+                                         ACCOUNTANT / SALES IN CHARGE
+                                    </td>
+                                    <td class="en-font" width="50%" style="font-size:13px;border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-collapse:collapse;border-top:0px;text-align:center:verticle-align:bottom;">
+                                       AUTHORIZED SIGNATORY
+                                    </td>
+                                </tr>
+
+<!--                                 <tr>-->
+<!--                                    <td height="20" colspan="2" style="background-color:#9ACD32;font-size:13px;border:1px solid black;border-collapse:collapse;"></td>-->
+<!--                                </tr>-->
+
+                                <tr>
+                                    <td colspan="2" align="center" class="en-font" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:center:">
+                                        AUTHORIZED SALES AND SERVICE PARTNER FOR JC VALVULAS SPAIN<br/>
+MECHANIAL MAINTENANCE REPAIIR OVERHAUL AND TESTING, VALVE TESTING, SPECIALIST SERVICES FOR OIL AND GAS
+                                    </td>
+                                </tr>
+
+                            </table>
+                   </div>
+
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+<!--                      <div class="footer">-->
+
+<!--                <div class="last-page">-->
+<!--                            <div class="row" style="page-break-inside: avoid;">-->
+
+<!--                   <div class="col-12" style="page-break-inside: avoid;">-->
+<!--                       <div class="text-center" style="page-break-inside: avoid;">-->
+<!--                            <table style="font-weight:bold;page-break-inside: avoid;" class="en-font">-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" colspan="2" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding:2px;">-->
+<!--                                        <b><span>Declaration</span></b>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" width="70%" style="font-size:13px;border:1px solid black;border-collapse:collapse;text-align:left;padding-left:3px;">-->
+<!--                                        <p>-->
+<!--                                    We request our vendors to confirm your acceptence to our terms of purchases as per the PO.-->
+<!--                                            if you have any difference of opinion about thr terms and conditions,you may please notify us.-->
+<!--                                        </p>-->
+<!--                                    </td>-->
+<!--                                    <td class="en-font" width="30%" style="font-size:13px;border-right:1px solid black;border-collapse:collapse;border-bottom:0px;text-align:center:verticle-align:top;">-->
+<!--                                        for <t t-esc="o.company_id.name"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr class="en-font">-->
+<!--                                    <td class="en-font" width="70%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>-->
+<!--                                    <td class="en-font" width="30%" height="40" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;">.</td>-->
+
+<!--                                </tr>-->
+
+<!--                                 <tr style="vertical-align: bottom;font-weight:bold;">-->
+<!--                                    <td class="en-font" width="70%" style="font-size:13px;border-right:1px solid black;border-left:1px solid black;border-top:0px;border-bottom:1px solid black;border-collapse:collapse;text-align:center:verticle-align:bottom;">-->
+
+<!--                                        <table width="100%" style="vertical-align: bottom;">-->
+<!--                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">-->
+<!--                                                Prepared By-->
+<!--                                            </td>-->
+<!--                                            <td class="en-font" style="font-size:13px;text-align:center:verticle-align:bottom;width:50%;">-->
+<!--                                               Checked By-->
+<!--                                            </td>-->
+<!--                                        </table>-->
+
+<!--                                    </td>-->
+<!--                                    <td class="en-font" width="30%" style="font-size:13px;border-bottom:1px solid black;border-right:1px solid black;border-collapse:collapse;border-top:0px;text-align:center:verticle-align:bottom;">-->
+<!--                                        Authorised Signatory-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
+<!--                   </div>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+
+        </template>
+
+
+        <template id="walcotech_sale_print_external_layout">
+            <div class="article">
+                <t t-call="sale_order_print.walcotech_sale_layout_header_my"/>
+                <t t-raw="0"/>
+            </div>
+        </template>
+
+            </data>
+        </odoo>
+    </data>
+</odoo>
