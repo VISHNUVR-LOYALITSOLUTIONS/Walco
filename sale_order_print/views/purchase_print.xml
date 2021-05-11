@@ -93,11 +93,12 @@
 
                                     <tr style="text-align:center; font-weight:bold;padding:5px;">
                                         <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;">Sl No</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 22%;border : 1px solid black;border-collapse:collapse;">Products</th>
+
                                         <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
-                                            width: 31%;text-align:center;vertical-align:middle;">
+                                            width: 22%;text-align:center;vertical-align:middle;">
                                             Description Of Goods
                                         </th>
-<!--                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 12%;border : 1px solid black;border-collapse:collapse;">Due on</th>-->
 
                                         <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;">Unit</th>
                                         <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;">Quantity</th>
@@ -123,6 +124,14 @@
 
 
                                         </td>
+
+                                              <td class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                    <t t-esc="l.name"/>
+                                                </span>
+
+
+                                        </td>
 <!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">-->
 <!--                                            <t t-if="o.due_on_date">-->
 <!--                                            <t t-esc="datetime.datetime.strptime(str(o.due_on_date), '%Y-%m-%d %H:%M:%S').strftime('%d-%b-%Y')"/>-->
@@ -142,7 +151,7 @@
 <!--                                                <t t-esc="l.price_unit"/>-->
                                         </td>
 
-                                         <td class="en-font" style="padding:5px;text-align:left;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
                                                 <t t-if="l.discount">
                                                     <t t-esc="'{:,.2f}'.format(l.discount)"/>
 
@@ -161,7 +170,7 @@
                                             <t t-esc="l_index+1"/>
                                         </td>
 
-                                        <td colspan="6" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
                                                 <span class="en-font" style="text-align:left;vertical-align:middle;">
                                                     <span t-field="l.name"/>
                                                 </span>
@@ -177,7 +186,7 @@
 
                                         </td>
 
-                                        <td colspan="6" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
                                                 <span class="en-font" style="text-align:left;vertical-align:middle;">
                                                    <span t-field="l.name"/>
                                                 </span>
@@ -192,7 +201,7 @@
 
                                      <tr style="text-align:center; font-weight:bold;padding:5px;">
                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
-                                        <td colspan="5" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
                                             width: 31%;text-align:right;vertical-align:middle;">
                                             Subtotal
                                         </td>
@@ -211,7 +220,7 @@
 
                                      <tr style="text-align:center; font-weight:bold;padding:5px;">
                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
-                                        <td colspan="5" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
                                             width: 31%;text-align:right;vertical-align:middle;">
                                             Tax
                                         </td>
@@ -233,7 +242,7 @@
 
                                      <tr style="text-align:center; font-weight:bold;padding:5px;">
                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
-                                        <td colspan="5" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
                                             width: 31%;text-align:right;vertical-align:middle;">
                                             Total
                                         </td>
@@ -282,46 +291,33 @@
 
                         </div>
                     </div>
-                     <div class="row">
+
+                         <div class="row">
                              <div class="col-12">
-                                        <table border="0" style="font-size: 14px;padding:5px;page-break-inside: avoid;"
+                                        <table border="0" style="font-size: 14px;padding:5px;"
                                                        width="100%;">
                                                      <tr class="en-font" style="padding:5px;font-size: 14px;">
-                                                         <td colspan="7" style="padding:5px;font-size: 14px;">
-                                                              <div class="en-font" style="font-weight:bold;font-size: 14px;">
+                                                         <td colspan="8" style="padding:5px;font-size: 14px;">
+<!--                                                              <div class="en-font" style="font-weight:bold;font-size: 14px;">-->
                                                                  <u class="en-font">
                                                                      <b>
                                                                         Terms &amp;amp; Conditions :-
                                                                     </b><br/>
                                                                  </u>
 
-<!--                                                                   <pre id="break" class="en-font" style="text-align:left;font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;page-break-inside: avoid;">-->
-<!--                                                                 <t t-esc="o.note"/>-->
-<!--                                                                    </pre>-->
-                                                              </div>
+
 
                                                          </td>
                                                      </tr>
-                                                         <tr class="en-font" style="padding:5px;font-size: 14px;text-align:left;">
-                                                         <td colspan="7" style="font-size: 14px;text-align:left;">
-                                                              <div class="en-font" style="font-weight:bold;font-size: 14px;text-align:left;">
-                                                                 <pre id="break" class="en-font" style="text-align:left;white-space: pre-line;font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;page-break-inside: avoid;">
-                                                                 <t t-esc="o.note"/>
-                                                                    </pre>
-                                                              </div>
 
-                                                         </td>
-                                                     </tr>
 
                                                  </table>
+
+                                 <p class="en-font" style="font-weight:bold;font-size:13px;" t-field="o.note"/>
                         </div>
                     </div>
 
-
-
-
                 </div>
-
 
  </t>
 <!-- </t>-->
