@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_estimate_print_extended_job_estimate_print_extended,job_estimate_print_extended.job_estimate_print_extended,model_job_estimate_print_extended_job_estimate_print_extended,base.group_user,1,1,1,1
