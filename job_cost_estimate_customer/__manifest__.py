@@ -11,6 +11,8 @@
                 'project',
                 'hr_timesheet',
                 'sale_management',
+                'hr','fleet'
+
                 ],
     'currency': 'EUR',
     'license': 'Other proprietary',
@@ -221,8 +223,11 @@ sales estimates
         'report/estimate_report.xml',
         'data/estimate_sequence.xml',
         'data/estimate_mail.xml',
+        'views/views.xml',
+
         'views/sale_estimate_views.xml',
         'views/job_type.xml',
+        'views/estimate_updation.xml',
     ],
     'installable' : True,
     'application' : False,

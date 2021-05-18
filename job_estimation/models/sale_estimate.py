@@ -111,8 +111,8 @@ class SaleEstimateJob(models.Model):
         res = super(SaleEstimateJob, self).estimate_confirm()
         for rec in self:
             # if not rec.estimate_ids:
-            if not rec.other_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.consumable_estimate_line_ids:
-                raise UserError(_('Please enter Estimation Lines!'))
+            # if not rec.other_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.consumable_estimate_line_ids:
+            #     raise UserError(_('Please enter Estimation Lines!'))
             rec.state = 'confirm'
         return res
             
@@ -120,8 +120,8 @@ class SaleEstimateJob(models.Model):
     def estimate_approve(self):
         res= super(SaleEstimateJob, self).estimate_approve()
         for rec in self:
-            if not rec.consumable_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.other_estimate_line_ids:
-                raise UserError(_('Please enter Estimation Lines!'))
+            # if not rec.consumable_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.other_estimate_line_ids:
+            #     raise UserError(_('Please enter Estimation Lines!'))
             rec.state = 'approve'
         return res
 
@@ -133,6 +133,7 @@ class SaleEstimateJob(models.Model):
         for rec in self:
             for line in rec.consumable_estimate_line_ids:
                 vals1 = {
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -146,6 +147,7 @@ class SaleEstimateJob(models.Model):
                 quo_line = quo_line_obj.create(vals1)
             for line in rec.logistics_estimate_line_ids:
                 vals1 = {
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -160,6 +162,7 @@ class SaleEstimateJob(models.Model):
                 
             for line in rec.outsourced_estimate_line_ids:
                 vals1 = {
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -174,6 +177,7 @@ class SaleEstimateJob(models.Model):
 
             for line in rec.other_estimate_line_ids:
                 vals1 = {
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,

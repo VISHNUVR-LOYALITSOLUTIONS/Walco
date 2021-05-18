@@ -21,7 +21,7 @@ Here is your estimate of ${object.number} <strong>${object.name}</strong> with
 % if object.origin:
 (with reference: ${object.origin} )
 % endif
-<strong> Material Estimate </strong> amounting in <strong> ${object.total} ${object.pricelist_id.currency_id.name}</strong> <strong> Labour Estimate </strong> amounting in <strong>${object.labour_total} ${object.pricelist_id.currency_id.name}</strong> <strong> Overhead Estimate </strong> amounting in <strong>${object.overhead_total} ${object.pricelist_id.currency_id.name}</strong> <strong> Total Job Estimate       </strong> amounting in <strong>${object.estimate_total} ${object.pricelist_id.currency_id.name}</strong>
+<strong> Material Estimate </strong> amounting in <strong> ${object.total} ${object.pricelist_id.currency_id.name}</strong> <strong> Labour Estimate </strong> amounting in <strong>${object.labour_total} ${object.pricelist_id.currency_id.name}</strong> <strong> Total Job Estimate       </strong> amounting in <strong>${object.estimate_total} ${object.pricelist_id.currency_id.name}</strong>
 from ${object.company_id.name}.
 </p>
 

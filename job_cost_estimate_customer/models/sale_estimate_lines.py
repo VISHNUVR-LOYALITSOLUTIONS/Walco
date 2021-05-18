@@ -22,9 +22,18 @@ class SaleEstimatelineJob(models.Model):
     )
     product_id = fields.Many2one(
         'product.product',
-        string='Product',
-        required=True
+        string='Product',required=True
     )
+
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string='Employee',
+    )
+
+    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle',store=True)
+
+    estimation_bool = fields.Boolean(default=False)
+
     product_uom_qty = fields.Float(
         string='Quantity', 
         digits=dp.get_precision('Product Unit of Measure'), 
@@ -34,7 +43,6 @@ class SaleEstimatelineJob(models.Model):
     product_uom = fields.Many2one(
         'uom.uom', #produtc.uom
         string='Unit of Measure', 
-        required=True
     )
     price_unit = fields.Float(
         'Unit Price', 
@@ -70,7 +78,22 @@ class SaleEstimatelineJob(models.Model):
         store=True,
     )
 
-    # @api.multi
+    @api.onchange('employee_id')
+    def employee_id_change(self):
+        for i in self:
+            if i.employee_id:
+                i.product_uom_qty = i.employee_id.hourly_cost
+                i.product_id = i.employee_id.product_id
+
+    @api.onchange('vehicle_id')
+    def vehicle_id_change(self):
+        for i in self:
+            if i.vehicle_id:
+                i.product_uom_qty = i.vehicle_id.price_per_kilometer
+                i.product_id = i.vehicle_id.product_id
+
+
+                # @api.multi
     @api.onchange('product_id')
     def product_id_change(self):
         if not self.product_id:

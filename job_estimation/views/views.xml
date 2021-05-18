@@ -7,11 +7,12 @@
           <field name="inherit_id" ref="job_cost_estimate_customer.view_sale_estimate_form_job"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//sheet/notebook/page[3]" position="after">
+                <xpath expr="//sheet/notebook/page[2]" position="after">
 
                     <page string="Consumable Estimation">
                             <field name="consumable_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'consumable'}" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}" nolabel="1">
                                 <tree editable="bottom">
+                                     <field name="estimation_bool"/>
                                     <field name="job_type"/>
                                     <field name="product_id"/>
                                     <field name="product_description"/>
@@ -27,12 +28,14 @@
                         <page string="Logistics Estimation">
                             <field name="logistics_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'logistics'}" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}" nolabel="1">
                                 <tree editable="bottom">
+                                     <field name="estimation_bool"/>
                                     <field name="job_type"/>
+                                    <field name="vehicle_id"/>
                                     <field name="product_id"/>
                                     <field name="product_description"/>
-                                    <field name="product_uom_qty"/>
-                                    <field name="product_uom" groups="uom.group_uom" />
-                                    <field name="price_unit"/>
+                                    <field name="product_uom_qty" string="Price/Km"/>
+<!--                                    <field name="product_uom" groups="uom.group_uom" />-->
+                                    <field name="price_unit" string="No.Of Km"/>
                                     <field name="discount"/>
                                     <field name="price_subtotal"/>
                                     <field name="estimate_id" invisible="1"/>
@@ -42,6 +45,7 @@
                         <page string="Outsourced Estimation">
                             <field name="outsourced_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'outsourced'}" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}" nolabel="1">
                                 <tree editable="bottom">
+                                     <field name="estimation_bool"/>
                                     <field name="job_type"/>
                                     <field name="product_id"/>
                                     <field name="product_description"/>
@@ -58,6 +62,7 @@
                       <page string="Others Estimation">
                             <field name="other_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'other'}" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}" nolabel="1">
                                 <tree editable="bottom">
+                                     <field name="estimation_bool"/>
                                     <field name="job_type"/>
                                     <field name="product_id"/>
                                     <field name="product_description"/>

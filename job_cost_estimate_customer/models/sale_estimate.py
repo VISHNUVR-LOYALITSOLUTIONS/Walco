@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError,AccessError
 import odoo.addons.decimal_precision as dp
 
 class SaleEstimateJob(models.Model):
@@ -102,6 +102,7 @@ class SaleEstimateJob(models.Model):
         readonly=True,
         copy=False,
     )
+
     
     @api.depends(
         'total',
@@ -167,6 +168,15 @@ class SaleEstimateJob(models.Model):
         'estimate.job.type',
         string='Job Types',
     )
+
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string='Technical Person Incharge',
+    )
+
+    markup = fields.Float(string='Markup', store=True)
+    overhead_amount = fields.Float(string='Overhead Amount', store=True)
+
     @api.depends('estimate_ids.price_subtotal')
     def _compute_totalestimate(self):
         for rec in self:
@@ -190,16 +200,22 @@ class SaleEstimateJob(models.Model):
     def estimate_confirm(self):
         for rec in self:
             # if not rec.estimate_ids:
-            if not rec.estimate_ids and not rec.labour_estimate_line_ids and not rec.overhead_estimate_line_ids:
-                raise UserError(_('Please enter Estimation Lines!'))
+            # if not rec.estimate_ids and not rec.labour_estimate_line_ids and not rec.overhead_estimate_line_ids:
+            #     raise UserError(_('Please enter Estimation Lines!'))
             rec.state = 'confirm'
             
     # @api.multi
     def estimate_approve(self):
         for rec in self:
-            if not rec.estimate_ids and not rec.labour_estimate_line_ids and not rec.overhead_estimate_line_ids:
-                raise UserError(_('Please enter Estimation Lines!'))
-            rec.state = 'approve'
+            if not self.env.user.has_group('job_cost_estimate_customer.group_estimate_approve_user'):
+                raise AccessError(_("Access Denied"))
+            # if not rec.estimate_ids and not rec.labour_estimate_line_ids and not rec.overhead_estimate_line_ids:
+            #     raise UserError(_('Please enter Estimation Lines!'))
+            else:
+                action = self.env.ref(
+                    'job_cost_estimate_customer.update_estimation_action').read()[0]
+                return action
+                # rec.state = 'approve'
             
     # @api.multi
     def estimate_quotesend(self):
@@ -309,6 +325,7 @@ class SaleEstimateJob(models.Model):
         for rec in self:
             for line in rec.estimate_ids:
                 vals1 = {
+                                'estimate_bool':line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -322,6 +339,7 @@ class SaleEstimateJob(models.Model):
                 quo_line = quo_line_obj.create(vals1)
             for line in rec.labour_estimate_line_ids:
                 vals1 = {
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -336,6 +354,8 @@ class SaleEstimateJob(models.Model):
                 
             for line in rec.overhead_estimate_line_ids:
                 vals1 = {
+
+                                'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
@@ -357,7 +377,10 @@ class SaleEstimateJob(models.Model):
                 'partner_id':rec.partner_id.id,
                 'origin': rec.number,
                 # 'project_id':rec.analytic_id.id
-                'analytic_account_id':rec.analytic_id.id
+                'analytic_account_id':rec.analytic_id.id,
+                'payment_term_id':rec.payment_term_id.id,
+                'markup': rec.markup,
+                'overhead_amount': rec.overhead_amount,
                 }
             quotation = quo_obj.create(vals)
             rec._prepare_quotation_line(quotation)

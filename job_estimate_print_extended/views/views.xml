@@ -53,11 +53,11 @@
                                     <table class="table table-condensed table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Product</th>
+                                                <th>Vehicle</th>
                                                 <th>Description</th>
-                                                <th>Quantity</th>
-                                                <th  groups="uom.group_uom">Unit of Measure</th>
-                                                <th>Unit Price</th>
+                                                <th>Price/Km</th>
+<!--                                                <th  groups="uom.group_uom">Unit of Measure</th>-->
+                                                <th>No of Km</th>
                                                 <th>Discount</th>
                                                 <th class="text-right">Sub Total</th>
                                             </tr>
@@ -65,7 +65,7 @@
                                         <tbody>
                                             <tr t-foreach="doc.logistics_estimate_line_ids" t-as="logistics_line">
                                                 <td>
-                                                    <span t-field="logistics_line.product_id.name"/>
+                                                    <span t-field="logistics_line.vehicle_id.name"/>
                                                 </td>
                                                 <td>
                                                     <span t-field="logistics_line.product_description"/>
@@ -73,9 +73,9 @@
                                                 <td>
                                                     <span t-field="logistics_line.product_uom_qty"/>
                                                 </td>
-                                                <td  groups="uom.group_uom">
-                                                    <span t-field="logistics_line.product_uom"/>
-                                                </td>
+<!--                                                <td  groups="uom.group_uom">-->
+<!--                                                    <span t-field="logistics_line.product_uom"/>-->
+<!--                                                </td>-->
                                                 <td>
                                                     <span t-field="logistics_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                 </td>

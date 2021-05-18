@@ -100,19 +100,19 @@
                                     <table class="table table-condensed table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Product</th>
+                                                <th>Employee</th>
                                                 <th>Description</th>
                                                 <th>Quantity</th>
                                                 <th  groups="uom.group_uom">Unit of Measure</th>
                                                 <th>Unit Price</th>
-                                                <th>Discount</th>
+<!--                                                <th>Discount</th>-->
                                                 <th class="text-right">Sub Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr t-foreach="doc.labour_estimate_line_ids" t-as="labour_line">
                                                 <td>
-                                                    <span t-field="labour_line.product_id.name"/> 
+                                                    <span t-field="labour_line.employee_id.name"/>
                                                 </td>
                                                 <td>
                                                     <span t-field="labour_line.product_description"/>
@@ -126,9 +126,9 @@
                                                 <td>
                                                     <span t-field="labour_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                 </td>
-                                                <td>
-                                                    <span t-field="labour_line.discount"/>
-                                                </td>
+<!--                                                <td>-->
+<!--                                                    <span t-field="labour_line.discount"/>-->
+<!--                                                </td>-->
                                                 <td class="text-right">
                                                     <span t-field="labour_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                 </td>
@@ -137,47 +137,49 @@
                                     </table>
                                 </div>
                                 
-                                <div>
-                                    <h3>Overhead Estimation</h3>
-                                    <table class="table table-condensed table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Product</th>
-                                                <th>Description</th>
-                                                <th>Quantity</th>
-                                                <th  groups="uom.group_uom">Unit of Measure</th>
-                                                <th>Unit Price</th>
-                                                <th>Discount</th>
-                                                <th class="text-right">Sub Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr t-foreach="doc.overhead_estimate_line_ids" t-as="overhead_line">
-                                                <td>
-                                                    <span t-field="overhead_line.product_id.name"/> 
-                                                </td>
-                                                <td>
-                                                    <span t-field="overhead_line.product_description"/>
-                                                </td>
-                                                <td>
-                                                    <span t-field="overhead_line.product_uom_qty"/>
-                                                </td>
-                                                <td  groups="uom.group_uom">
-                                                    <span t-field="overhead_line.product_uom"/>
-                                                </td>
-                                                <td>
-                                                    <span t-field="overhead_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                                                </td>
-                                                <td>
-                                                    <span t-field="overhead_line.discount"/>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span t-field="overhead_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+<!--                                <div>-->
+<!--                                    <h3>Overhead Estimation</h3>-->
+<!--                                    <table class="table table-condensed table-bordered">-->
+<!--                                        <thead>-->
+<!--                                            <tr>-->
+<!--                                                <th>Product</th>-->
+<!--                                                <th>Description</th>-->
+<!--                                                <th>Quantity</th>-->
+<!--                                                <th  groups="uom.group_uom">Unit of Measure</th>-->
+<!--                                                <th>Unit Price</th>-->
+<!--                                                <th>Discount</th>-->
+<!--                                                <th class="text-right">Sub Total</th>-->
+<!--                                            </tr>-->
+<!--                                        </thead>-->
+<!--                                        <tbody>-->
+<!--                                            <tr t-foreach="doc.overhead_estimate_line_ids" t-as="overhead_line">-->
+<!--                                                <td>-->
+<!--                                                    <span t-field="overhead_line.product_id.name"/> -->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-field="overhead_line.product_description"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-field="overhead_line.product_uom_qty"/>-->
+<!--                                                </td>-->
+<!--                                                <td  groups="uom.group_uom">-->
+<!--                                                    <span t-field="overhead_line.product_uom"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-field="overhead_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <span t-field="overhead_line.discount"/>-->
+<!--                                                </td>-->
+<!--                                                <td class="text-right">-->
+<!--                                                    <span t-field="overhead_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+
+
                                 <div class="row">
                                     <!-- <div class="col-xs-4 pull-right"> -->
                                     <div class="col-8"/>
@@ -195,12 +197,12 @@
                                                     <span t-esc="doc.labour_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><strong>Total Overhead Estimate</strong></td>
-                                                <td class="text-right">
-                                                    <span t-esc="doc.overhead_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                                                </td>
-                                            </tr>
+<!--                                            <tr>-->
+<!--                                                <td><strong>Total Overhead Estimate</strong></td>-->
+<!--                                                <td class="text-right">-->
+<!--                                                    <span t-esc="doc.overhead_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
                                             <tr>
                                                 <td><strong>Total Job Estimate</strong></td>
                                                 <td class="text-right">

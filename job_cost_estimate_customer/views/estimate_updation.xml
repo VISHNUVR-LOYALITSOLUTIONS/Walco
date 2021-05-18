@@ -1,0 +1,43 @@
+<odoo>
+  <data>
+
+
+             <record id="update_estimation_wiz_view" model="ir.ui.view">
+            <field name="name">Approve Estimation</field>
+            <field name="model">estimation.approval</field>
+            <field name="arch" type="xml">
+
+
+                 <form string="Approve">
+
+            <group>
+                <field name="estimate_id" invisible="1"/>
+                <field name="markup"/>
+                <field name="overhead_amount"/>
+                <field name="payment_term_id"/>
+
+            </group>
+            <footer>
+                <button type="object" name="confirm"
+                        string="Approve" class="btn-primary"/>
+                <button special="cancel" string="Cancel" class="btn-default"/>
+            </footer>
+        </form>
+
+            </field>
+        </record>
+
+
+
+       <record id="update_estimation_action" model="ir.actions.act_window">
+        <field name="name">Approve Estimation</field>
+        <field name="res_model">estimation.approval</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="update_estimation_wiz_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+
+  </data>
+</odoo>
