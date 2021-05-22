@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+
+
+    <record id="fleet_odometer_tree_fields" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.tree</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree/field[@name='driver_id']" position="after">
+                <field name="purpose"/>
+                <field name="killometer_run"/>
+            </xpath>
+
+             <xpath expr="//tree/field[@name='value']" position="attributes">
+                 <attribute name="widget">integer</attribute>
+             </xpath>
+
+        </field>
+    </record>
+
+     <record id="fleet_odometer_kanban_fields" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.kanban</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//templates/t/div/div/span/field[@name='driver_id']" position="after">
+                <field name="purpose"/>
+                <field name="killometer_run"/>
+            </xpath>
+
+             <xpath expr="//templates/t/div/div/span/field[@name='value']" position="attributes">
+                 <attribute name="widget">integer</attribute>
+             </xpath>
+
+        </field>
+    </record>
+
+        <record id="fleet_odometer_form_fields" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.form</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/group/field[@name='vehicle_id']" position="after">
+                <field name="purpose"/>
+                <field name="killometer_run"/>
+            </xpath>
+             <xpath expr="//sheet/group/field[@name='value']" position="attributes">
+                 <attribute name="widget">integer</attribute>
+             </xpath>
+
+        </field>
+    </record>
+
+  </data>
+</odoo>
