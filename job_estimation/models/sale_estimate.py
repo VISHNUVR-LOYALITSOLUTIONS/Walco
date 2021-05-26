@@ -13,7 +13,7 @@ class SaleEstimateJob(models.Model):
         'sale.estimate.line.job',
         'estimate_id',
         'Estimate Lines',
-        copy=False,
+        copy=True,
         domain=[('job_type','=','consumable')],
     )
 
@@ -21,7 +21,7 @@ class SaleEstimateJob(models.Model):
         'sale.estimate.line.job',
         'estimate_id',
         'Estimate Lines',
-        copy=False,
+        copy=True,
         domain=[('job_type', '=', 'logistics')],
     )
 
@@ -29,14 +29,14 @@ class SaleEstimateJob(models.Model):
         'sale.estimate.line.job',
         'estimate_id',
         'Estimate Lines',
-        copy=False,
+        copy=True,
         domain=[('job_type', '=', 'outsourced')],
     )
     other_estimate_line_ids = fields.One2many(
         'sale.estimate.line.job',
         'estimate_id',
         'Estimate Lines',
-        copy=False,
+        copy=True,
         domain=[('job_type', '=', 'other')],
     )
 

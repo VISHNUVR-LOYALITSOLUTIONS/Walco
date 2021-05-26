@@ -73,7 +73,7 @@ class SaleEstimateJob(models.Model):
         'sale.estimate.line.job',
         'estimate_id',
         'Estimate Lines',
-        copy=False,
+        copy=True,
         domain=[('job_type','=','material')],
     )
     reference = fields.Char(
@@ -134,13 +134,13 @@ class SaleEstimateJob(models.Model):
     labour_estimate_line_ids = fields.One2many(
         'sale.estimate.line.job',
         'estimate_id',
-        copy=False,
+        copy=True,
         domain=[('job_type','=','labour')],
     )
     overhead_estimate_line_ids = fields.One2many(
         'sale.estimate.line.job',
         'estimate_id',
-        copy=False,
+        copy=True,
         domain=[('job_type','=','overhead')],
     )
     analytic_id = fields.Many2one(
