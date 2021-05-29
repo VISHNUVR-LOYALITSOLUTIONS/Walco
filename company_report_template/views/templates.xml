@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+            <template id="custom_report_saleorder" inherit_id="sale.report_saleorder">
+                  <xpath expr="//t[@t-call='web.html_container']" position="replace">
+                    <t t-call="web.html_container">
+                        <t t-foreach="docs" t-as="o">
+                            <t t-if="o.company_id.sale_reports == 'walcotech'">
+                                <t t-call="sale_order_print.walcotech_sale_template_document" t-lang="o.partner_id.lang"/>
+                            </t>
+                            <t t-if="o.company_id.sale_reports == 'texerv'">
+                                <t t-call="sale_order_print.texerv_sale_template_document" t-lang="o.partner_id.lang"/>
+                            </t>
+                            <t t-if="o.company_id.sale_reports == 'walco'">
+                                <t t-call="sale_order_print.walco_sale_template_document" t-lang="o.partner_id.lang"/>
+                            </t>
+                            <t t-if="o.company_id.sale_reports == 'odoo_standard'">
+                                <t t-call="sale.report_saleorder_document" t-lang="o.partner_id.lang"/>
+                            </t>
+                        </t>
+                    </t>
+                  </xpath>
+            </template>
+
+    </data>
+</odoo>
