@@ -7,6 +7,12 @@
           <field name="inherit_id" ref="job_cost_estimate_customer.view_sale_estimate_form_job"/>
             <field name="arch" type="xml">
 
+                <field name="reference" position="after">
+                    <field name="opportunity_id"/>
+                </field>
+
+
+
                 <xpath expr="//sheet/notebook/page[2]" position="after">
 
                     <page string="Consumable Estimation">

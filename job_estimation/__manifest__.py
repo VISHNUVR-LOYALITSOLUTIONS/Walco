@@ -27,6 +27,7 @@
         'security/security.xml',
         'views/views.xml',
         'views/templates.xml',
+        'views/crm_estimate.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

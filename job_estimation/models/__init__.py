@@ -2,3 +2,4 @@
 from . import sale_estimate
 from . import sale_estimate_lines
 from . import models
+from . import crm_estimate
