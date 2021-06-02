@@ -3,10 +3,14 @@
     'name': "company_report_template",
 
     'summary': """
-        company wise report attachment""",
+        company wise report attachment
+         choose company in settings->company->sales report
+        """,
 
     'description': """
         company wise report attachment
+        
+        choose company in settings->company->sales report
     """,
 
     'author': "Loyal IT Solutions PVT LTD",

@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 
+
 class res_company(models.Model):
     _inherit = "res.company"
 
@@ -10,4 +11,6 @@ class res_company(models.Model):
             ('texerv', 'TEXERV'),
             ('walco', 'Walco'),
             ('odoo_standard', 'Odoo Standard'),
-        ], 'Sale Print')
+        ], default='odoo_standard',string='Sale Print')
+
+
