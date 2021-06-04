@@ -322,51 +322,51 @@ class SaleEstimateJob(models.Model):
     # @api.multi
     def _prepare_quotation_line(self,quotation):
         quo_line_obj = self.env['sale.order.line']
-        for rec in self:
-            for line in rec.estimate_ids:
-                vals1 = {
-                                'estimate_bool':line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
-            for line in rec.labour_estimate_line_ids:
-                vals1 = {
-                                'estimate_bool': line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
-                
-            for line in rec.overhead_estimate_line_ids:
-                vals1 = {
-
-                                'estimate_bool': line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
+        # for rec in self:
+        #     for line in rec.estimate_ids:
+        #         vals1 = {
+        #                         'estimate_bool':line.estimation_bool,
+        #                         'product_id':  line.product_id.id,
+        #                         'product_uom_qty': line.product_uom_qty,
+        #                         'product_uom': line.product_uom.id,
+        #                         'price_unit' : line.price_unit,
+        #                         'price_subtotal': line.price_subtotal,
+        #                         'name' : line.product_description,
+        #                         'price_total' : self.total,
+        #                         'discount' : line.discount,
+        #                         'order_id':quotation.id,
+        #                         }
+        #         quo_line = quo_line_obj.create(vals1)
+        #     for line in rec.labour_estimate_line_ids:
+        #         vals1 = {
+        #                         'estimate_bool': line.estimation_bool,
+        #                         'product_id':  line.product_id.id,
+        #                         'product_uom_qty': line.product_uom_qty,
+        #                         'product_uom': line.product_uom.id,
+        #                         'price_unit' : line.price_unit,
+        #                         'price_subtotal': line.price_subtotal,
+        #                         'name' : line.product_description,
+        #                         'price_total' : self.total,
+        #                         'discount' : line.discount,
+        #                         'order_id':quotation.id,
+        #                         }
+        #         quo_line = quo_line_obj.create(vals1)
+        #
+        #     for line in rec.overhead_estimate_line_ids:
+        #         vals1 = {
+        #
+        #                         'estimate_bool': line.estimation_bool,
+        #                         'product_id':  line.product_id.id,
+        #                         'product_uom_qty': line.product_uom_qty,
+        #                         'product_uom': line.product_uom.id,
+        #                         'price_unit' : line.price_unit,
+        #                         'price_subtotal': line.price_subtotal,
+        #                         'name' : line.product_description,
+        #                         'price_total' : self.total,
+        #                         'discount' : line.discount,
+        #                         'order_id':quotation.id,
+        #                         }
+        #         quo_line = quo_line_obj.create(vals1)
         
     # @api.multi
     def estimate_to_quotation(self):
@@ -376,6 +376,7 @@ class SaleEstimateJob(models.Model):
             vals = {
                 'partner_id':rec.partner_id.id,
                 'origin': rec.number,
+                'estimate_id':rec.id,
                 # 'project_id':rec.analytic_id.id
                 'analytic_account_id':rec.analytic_id.id,
                 'payment_term_id':rec.payment_term_id.id,

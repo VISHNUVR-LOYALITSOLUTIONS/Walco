@@ -6,12 +6,12 @@
     'name': "Estimation for Jobs - Material / Labour / Overheads",
     'version': '1.9',
     'price': 79.0,
-    'depends': [
+    'depends': ['base',
                 'sale',
                 'project',
                 'hr_timesheet',
                 'sale_management',
-                'hr','fleet'
+                'hr','fleet','universal_discount'
 
                 ],
     'currency': 'EUR',

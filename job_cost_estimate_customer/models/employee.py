@@ -8,14 +8,17 @@ class SaleOrder(models.Model):
 
     markup = fields.Float(string='Markup', store=True)
     overhead_amount = fields.Float(string='Overhead Amount', store=True)
+    estimate_id = fields.Many2one('sale.estimate.job',string='Estimate')
+
 
     @api.depends('order_line.price_total', 'markup', 'overhead_amount')
     def _amount_all(self):
         res = super(SaleOrder, self)._amount_all()
         for rec in self:
-            if rec.markup !=0 :
-                rec.amount_total = ((rec.amount_untaxed + rec.amount_tax)* (rec.markup/100))
-            rec.amount_total = rec.amount_total + rec.overhead_amount
+            mark=0
+            if rec.markup:
+                mark = ((rec.amount_total)* (rec.markup/100))
+            rec.amount_total = rec.amount_total + mark + rec.overhead_amount
         return res
 
 
