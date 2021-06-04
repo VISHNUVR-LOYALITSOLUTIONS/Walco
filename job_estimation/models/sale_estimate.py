@@ -80,7 +80,8 @@ class SaleEstimateJob(models.Model):
     )
     def _compute_job_estimate_total(self):
         for rec in self:
-            rec.estimate_total = rec.total + rec.labour_total + rec.overhead_total+rec.consumable_total + rec.logistics_total + rec.outsourced_total +rec.others_total
+            rec.estimate_total = rec.total + rec.labour_total + rec.overhead_total+rec.consumable_total + rec.logistics_total + rec.outsourced_total
+                                 # +rec.others_total
             
     @api.depends('consumable_estimate_line_ids.price_subtotal')
     def _compute_consumable_total(self):
@@ -137,50 +138,50 @@ class SaleEstimateJob(models.Model):
         res = super(SaleEstimateJob, self)._prepare_quotation_line(quotation)
         quo_line_obj = self.env['sale.order.line']
         for rec in self:
-            for line in rec.consumable_estimate_line_ids:
-                vals1 = {
-                                'estimate_bool': line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
-            for line in rec.logistics_estimate_line_ids:
-                vals1 = {
-                                'estimate_bool': line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                # 'product_uom': line.product_uom.id,
-                                'product_uom': line.product_id.uom_id.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
-                
-            for line in rec.outsourced_estimate_line_ids:
-                vals1 = {
-                                'estimate_bool': line.estimation_bool,
-                                'product_id':  line.product_id.id,
-                                'product_uom_qty': line.product_uom_qty,
-                                'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
-                                'name' : line.product_description,
-                                'price_total' : self.total,
-                                'discount' : line.discount,
-                                'order_id':quotation.id,
-                                }
-                quo_line = quo_line_obj.create(vals1)
+            # for line in rec.consumable_estimate_line_ids:
+            #     vals1 = {
+            #                     'estimate_bool': line.estimation_bool,
+            #                     'product_id':  line.product_id.id,
+            #                     'product_uom_qty': line.product_uom_qty,
+            #                     'product_uom': line.product_uom.id,
+            #                     'price_unit' : line.price_unit,
+            #                     'price_subtotal': line.price_subtotal,
+            #                     'name' : line.product_description,
+            #                     'price_total' : self.total,
+            #                     'discount' : line.discount,
+            #                     'order_id':quotation.id,
+            #                     }
+            #     quo_line = quo_line_obj.create(vals1)
+            # for line in rec.logistics_estimate_line_ids:
+            #     vals1 = {
+            #                     'estimate_bool': line.estimation_bool,
+            #                     'product_id':  line.product_id.id,
+            #                     'product_uom_qty': line.product_uom_qty,
+            #                     # 'product_uom': line.product_uom.id,
+            #                     'product_uom': line.product_id.uom_id.id,
+            #                     'price_unit' : line.price_unit,
+            #                     'price_subtotal': line.price_subtotal,
+            #                     'name' : line.product_description,
+            #                     'price_total' : self.total,
+            #                     'discount' : line.discount,
+            #                     'order_id':quotation.id,
+            #                     }
+            #     quo_line = quo_line_obj.create(vals1)
+            #
+            # for line in rec.outsourced_estimate_line_ids:
+            #     vals1 = {
+            #                     'estimate_bool': line.estimation_bool,
+            #                     'product_id':  line.product_id.id,
+            #                     'product_uom_qty': line.product_uom_qty,
+            #                     'product_uom': line.product_uom.id,
+            #                     'price_unit' : line.price_unit,
+            #                     'price_subtotal': line.price_subtotal,
+            #                     'name' : line.product_description,
+            #                     'price_total' : self.total,
+            #                     'discount' : line.discount,
+            #                     'order_id':quotation.id,
+            #                     }
+            #     quo_line = quo_line_obj.create(vals1)
 
             for line in rec.other_estimate_line_ids:
                 vals1 = {
