@@ -66,7 +66,7 @@
                         </page>
 
 
-                    <page string="POST Estimation">
+                    <page string="POST Estimation" groups="job_cost_estimate_customer.group_estimate_approve_user">
                             <field name="post_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'outsourced'}" attrs="{'readonly': [('state', 'in', ['approve','quotesend','cancel','reject'])]}" nolabel="1" groups="job_cost_estimate_customer.group_estimate_approve_user">
                                 <tree editable="bottom">
                                      <field name="estimation_bool" invisible="1"/>

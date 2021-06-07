@@ -252,20 +252,22 @@ class SaleEstimateJob(models.Model):
 
             for line in rec.other_estimate_line_ids:
                 no_lines = len(rec.other_estimate_line_ids)
+                estimate_total = ((line.price_unit/rec.estimate_total)*rec.markup + line.price_unit) if rec.total!=0 else 0
+
 
                 vals1 = {
                                 'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
                                 'product_uom_qty': line.product_uom_qty,
                                 'product_uom': line.product_uom.id,
-                                'price_unit' : line.price_unit,
-                                'price_subtotal': line.price_subtotal,
+                                'price_unit' : estimate_total,
+                                # 'price_subtotal': estimate_total,
                                 'name' : line.product_description,
                                 'price_total' : self.total,
                                 'discount' : line.discount,
                                 'order_id':quotation.id,
                                 'job_type': 'estimation',
-                                'markup': rec.markup/no_lines if no_lines!=0 else 0,
+                                # 'markup': rec.markup/no_lines if no_lines!=0 else 0,
                                 }
                 quo_line = quo_line_obj.create(vals1)
         return res
