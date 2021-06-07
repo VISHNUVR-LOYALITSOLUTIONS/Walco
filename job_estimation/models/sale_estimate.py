@@ -40,6 +40,14 @@ class SaleEstimateJob(models.Model):
         domain=[('job_type', '=', 'other')],
     )
 
+    post_estimate_line_ids = fields.One2many(
+        'sale.estimate.line.job',
+        'estimate_id',
+        'Estimate Lines',
+        copy=True,
+        domain=[('job_type', '=', 'estimation')],
+    )
+
     consumable_total = fields.Float(
         compute='_compute_consumable_total',
         string='Total Consumable Estimate',
@@ -68,6 +76,16 @@ class SaleEstimateJob(models.Model):
     opportunity_id = fields.Many2one(
         'crm.lead', string='Opportunity', check_company=True,
         domain="[('type', '=', 'opportunity'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+
+    markup = fields.Float(string='Total Markup', compute='_compute_total_markup',
+                          store=True, )
+
+    @api.depends('post_estimate_line_ids.markup_value')
+    def _compute_total_markup(self):
+        for rec in self:
+            rec.markup = 0.0
+            for line in rec.post_estimate_line_ids:
+                rec.markup += line.markup_value
 
     @api.depends(
         'total',
@@ -115,13 +133,106 @@ class SaleEstimateJob(models.Model):
 
     # @api.multi
     def estimate_confirm(self):
-        res = super(SaleEstimateJob, self).estimate_confirm()
+        post_list = []
         for rec in self:
-            # if not rec.estimate_ids:
-            # if not rec.other_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.consumable_estimate_line_ids:
-            #     raise UserError(_('Please enter Estimation Lines!'))
-            rec.state = 'confirm'
-        return res
+
+            for line in rec.estimate_ids:
+                vals1 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon1 = (0, 0, vals1)
+                post_list.append(mon1)
+                # post_list.append([0, 0, vals1])
+            for line in rec.labour_estimate_line_ids:
+                vals2 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon2 = (0, 0, vals2)
+                post_list.append(mon2)
+                # post_list.append([0, 0, vals2])
+            for line in rec.overhead_estimate_line_ids:
+                vals3 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon3 = (0, 0, vals3)
+                post_list.append(mon3)
+                # post_list.append([0, 0, vals3])
+            for line in rec.consumable_estimate_line_ids:
+                vals4 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon4 = (0, 0, vals4)
+                post_list.append(mon4)
+                # post_list.append([0, 0, vals4])
+            for line in rec.logistics_estimate_line_ids:
+                vals5 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon5 = (0, 0, vals5)
+                post_list.append(mon5)
+                # post_list.append([0, 0, vals5])
+
+            for line in rec.outsourced_estimate_line_ids:
+                vals6 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon6 = (0, 0, vals6)
+                post_list.append(mon6)
+                # post_list.append([0, 0, vals6])
+
+            # post_list.append([0, 0, val])
+            self.post_estimate_line_ids = [(6, 0, [])]
+            self.write({'post_estimate_line_ids': post_list})
+
+        return super(SaleEstimateJob, self).estimate_confirm()
             
     # @api.multi
     def estimate_approve(self):
@@ -138,52 +249,10 @@ class SaleEstimateJob(models.Model):
         res = super(SaleEstimateJob, self)._prepare_quotation_line(quotation)
         quo_line_obj = self.env['sale.order.line']
         for rec in self:
-            # for line in rec.consumable_estimate_line_ids:
-            #     vals1 = {
-            #                     'estimate_bool': line.estimation_bool,
-            #                     'product_id':  line.product_id.id,
-            #                     'product_uom_qty': line.product_uom_qty,
-            #                     'product_uom': line.product_uom.id,
-            #                     'price_unit' : line.price_unit,
-            #                     'price_subtotal': line.price_subtotal,
-            #                     'name' : line.product_description,
-            #                     'price_total' : self.total,
-            #                     'discount' : line.discount,
-            #                     'order_id':quotation.id,
-            #                     }
-            #     quo_line = quo_line_obj.create(vals1)
-            # for line in rec.logistics_estimate_line_ids:
-            #     vals1 = {
-            #                     'estimate_bool': line.estimation_bool,
-            #                     'product_id':  line.product_id.id,
-            #                     'product_uom_qty': line.product_uom_qty,
-            #                     # 'product_uom': line.product_uom.id,
-            #                     'product_uom': line.product_id.uom_id.id,
-            #                     'price_unit' : line.price_unit,
-            #                     'price_subtotal': line.price_subtotal,
-            #                     'name' : line.product_description,
-            #                     'price_total' : self.total,
-            #                     'discount' : line.discount,
-            #                     'order_id':quotation.id,
-            #                     }
-            #     quo_line = quo_line_obj.create(vals1)
-            #
-            # for line in rec.outsourced_estimate_line_ids:
-            #     vals1 = {
-            #                     'estimate_bool': line.estimation_bool,
-            #                     'product_id':  line.product_id.id,
-            #                     'product_uom_qty': line.product_uom_qty,
-            #                     'product_uom': line.product_uom.id,
-            #                     'price_unit' : line.price_unit,
-            #                     'price_subtotal': line.price_subtotal,
-            #                     'name' : line.product_description,
-            #                     'price_total' : self.total,
-            #                     'discount' : line.discount,
-            #                     'order_id':quotation.id,
-            #                     }
-            #     quo_line = quo_line_obj.create(vals1)
 
             for line in rec.other_estimate_line_ids:
+                no_lines = len(rec.other_estimate_line_ids)
+
                 vals1 = {
                                 'estimate_bool': line.estimation_bool,
                                 'product_id':  line.product_id.id,
@@ -195,6 +264,8 @@ class SaleEstimateJob(models.Model):
                                 'price_total' : self.total,
                                 'discount' : line.discount,
                                 'order_id':quotation.id,
+                                'job_type': 'estimation',
+                                'markup': rec.markup/no_lines if no_lines!=0 else 0,
                                 }
                 quo_line = quo_line_obj.create(vals1)
         return res
