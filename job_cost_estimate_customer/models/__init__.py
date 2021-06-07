@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import employee
 from . import sale_estimate
-from . import estimation_action
 from . import sale_estimate_lines
 from . import job_type
 

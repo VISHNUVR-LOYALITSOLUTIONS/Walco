@@ -6,27 +6,28 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
-    markup = fields.Float(string='Markup', store=True)
-    overhead_amount = fields.Float(string='Overhead Amount', store=True)
+    markup = fields.Float(string='Total Markup', store=True)
     estimate_id = fields.Many2one('sale.estimate.job',string='Estimate')
-
-
-    @api.depends('order_line.price_total', 'markup', 'overhead_amount')
-    def _amount_all(self):
-        res = super(SaleOrder, self)._amount_all()
-        for rec in self:
-            mark=0
-            if rec.markup:
-                mark = ((rec.amount_total)* (rec.markup/100))
-            rec.amount_total = rec.amount_total + mark + rec.overhead_amount
-        return res
-
 
 class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
     estimate_bool = fields.Boolean(default=False)
+    markup = fields.Float(string='Markup', store=True)
+    job_type = fields.Selection(
+        selection=[('material', 'Material'),
+                   ('labour', 'Labour'),
+                   ('overhead', 'Overhead'),
+                   ('consumable', 'Consumable'),
+                   ('logistics', 'Logistics'),
+                   ('outsourced', 'Outsourced'),
+                   ('estimation', 'Estimation'),
+                   ('other', 'Others')
+                   ],
+        string="Type",
+
+    )
 
 class HrEmployeePrivate(models.Model):
 

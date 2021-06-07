@@ -67,7 +67,12 @@ class SaleEstimatelineJob(models.Model):
     job_type = fields.Selection(
         selection=[('material','Material'),
                    ('labour','Labour'),
-                    ('overhead','Overhead')
+                    ('overhead','Overhead'),
+                   ('consumable', 'Consumable'),
+                   ('logistics', 'Logistics'),
+                   ('outsourced', 'Outsourced'),
+                   ('estimation', 'Estimation'),
+                   ('other', 'Others')
                 ],
         string="Type",
         required=True,
@@ -77,6 +82,7 @@ class SaleEstimatelineJob(models.Model):
         'Analytic Account',
         store=True,
     )
+
 
     @api.onchange('employee_id')
     def employee_id_change(self):

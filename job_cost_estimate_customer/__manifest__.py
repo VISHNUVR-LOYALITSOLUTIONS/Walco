@@ -11,7 +11,7 @@
                 'project',
                 'hr_timesheet',
                 'sale_management',
-                'hr','fleet','universal_discount'
+                'hr','fleet',
 
                 ],
     'currency': 'EUR',
@@ -227,7 +227,6 @@ sales estimates
 
         'views/sale_estimate_views.xml',
         'views/job_type.xml',
-        'views/estimate_updation.xml',
     ],
     'installable' : True,
     'application' : False,
