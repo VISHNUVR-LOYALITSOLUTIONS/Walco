@@ -85,7 +85,7 @@
                             </field>
                         </page>
 
-                      <page string="Others Estimation">
+                      <page string="Quotation">
                             <field name="other_estimate_line_ids" context="{'default_analytic_id':analytic_id,'default_job_type':'other'}" attrs="{'readonly': [('state', 'in', ['confirm','approve','quotesend','cancel','reject'])]}" nolabel="1">
                                 <tree editable="bottom">
 <!--                                     <field name="estimation_bool"/>-->

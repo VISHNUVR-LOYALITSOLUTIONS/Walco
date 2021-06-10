@@ -42,3 +42,4 @@ class CrmLead(models.Model):
             'default_company_id': self.company_id.id or self.env.company.id,
         }
         return action
+

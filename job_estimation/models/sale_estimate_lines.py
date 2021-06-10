@@ -39,3 +39,23 @@ class SaleEstimatelineJob(models.Model):
         string='Markup Value',
         store=True
     )
+
+    @api.onchange('product_id')
+    def onchange_product_id_get_domain(self):
+
+        estimate_productid_list = []
+        consumable_productid_list = []
+        if self.job_type=='material':
+            material_id = self.env["product.product"].search(
+                [('job_type', '=', 'material')])
+            for line_id in material_id:
+                estimate_productid_list.append(line_id.id)
+            result = {'domain': {'product_id': [('id', 'in', estimate_productid_list)]}}
+            return result
+        if self.job_type=='consumable':
+            consumable_id = self.env["product.product"].search(
+                [('job_type', '=', 'consumable')])
+            for line_id in consumable_id:
+                consumable_productid_list.append(line_id.id)
+            result = {'domain': {'product_id': [('id', 'in', consumable_productid_list)]}}
+            return result
