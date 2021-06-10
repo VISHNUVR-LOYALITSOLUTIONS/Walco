@@ -41,3 +41,4 @@ class FleetVehicle(models.Model):
 
     price_per_kilometer = fields.Float(string="Price/Km")
     product_id = fields.Many2one('product.product',string='Related Product',)
+

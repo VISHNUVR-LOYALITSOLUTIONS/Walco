@@ -11,7 +11,7 @@
                 'project',
                 'hr_timesheet',
                 'sale_management',
-                'hr','fleet',
+                'hr','fleet','customer_vendor_code'
 
                 ],
     'currency': 'EUR',

@@ -182,13 +182,15 @@ class SaleEstimateJob(models.Model):
             rec.total = 0.0
             for line in rec.estimate_ids:
                 rec.total += line.price_subtotal
-        
+
+
     @api.onchange('partner_id')
     def _onchange_customer_id(self):
         for rec in self:
             partner = self.env['res.partner'].browse(rec.partner_id.id)
             rec.pricelist_id = partner.property_product_pricelist.id
             rec.payment_term_id = partner.property_payment_term_id.id
+            rec.reference = partner.ref
             
     # @api.multi
     def estimate_send(self):
@@ -333,6 +335,9 @@ class SaleEstimateJob(models.Model):
                 'analytic_account_id':rec.analytic_id.id,
                 'payment_term_id':rec.payment_term_id.id,
                 'markup': rec.markup,
+                'customer_code':rec.partner_id.ref,
+                'note':rec.description,
+                # 'reference':rec.partner_id.ref,
 
                 }
             quotation = quo_obj.create(vals)
