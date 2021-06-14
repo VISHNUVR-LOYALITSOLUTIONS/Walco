@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError,AccessError
+from odoo.exceptions import UserError,AccessError,Warning
 import odoo.addons.decimal_precision as dp
+from odoo import SUPERUSER_ID
+
+
+
 
 class SaleEstimateJob(models.Model):
     _name = "sale.estimate.job"
@@ -208,11 +212,36 @@ class SaleEstimateJob(models.Model):
             
     # @api.multi
     def estimate_approve(self):
+        su_id = self.env['res.users'].browse(SUPERUSER_ID)
+        users = self.env['res.users'].search(
+            [('groups_id', 'in', [self.env.ref('job_cost_estimate_customer.group_estimate_approve_user').id])])
+
         for rec in self:
             if not self.env.user.has_group('job_cost_estimate_customer.group_estimate_approve_user'):
-                raise AccessError(_("Access Denied"))
+                template_id = self.env.ref('job_cost_estimate_customer.access_denied_mail')
+                # email_values = {'email_to': rec.partner_id.email,
+                #                 'email_from': self.env.user.email}
+                for i in users:
+                    email_values = {'email_to': i.partner_id.email,
+                                    'email_from': self.env.user.email,
+                                        # su_id.partner_id.email
+                                    }
+                    template_id.send_mail(rec.id, email_values=email_values,force_send=True)
+                raise Warning(_("Thank you for your effort, your estimate is sent for approval. Once approved, you will be notified."))
+
+                # raise UserError(_("Thank you for your effort, your estimate is sent for approval. Once approved, you will be notified."))
+                # raise AccessError(_("Thank you for your effort, your estimate is sent for approval. Once approved, you will be notified."))
             else:
-                rec.state = 'approve'
+                return {
+                    'name': 'Are you sure?',
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'approval.message',
+                    'view_mode': 'form',
+                    'view_type': 'form',
+                    'target': 'new',
+                    'context': {'current_id': self.id}
+                }
+                # rec.state = 'approve'
             
     # @api.multi
     def estimate_quotesend(self):
@@ -233,6 +262,19 @@ class SaleEstimateJob(models.Model):
     def reset_todraft(self):
         for rec in self:
             rec.state = 'draft'
+
+    def btn_reverse(self):
+        su_id = self.env['res.users'].browse(SUPERUSER_ID)
+        for rec in self:
+            rec.state = 'draft'
+            template_id = self.env.ref('job_cost_estimate_customer.revised_mail')
+            email_values = {'email_to': rec.user_id.partner_id.email,
+                            'email_from': self.env.user.email,
+                                # su_id.partner_id.email
+                            }
+            template_id.send_mail(rec.id, email_values=email_values, force_send=True)
+
+
             
     @api.model
     def create(self, vals):
@@ -344,5 +386,34 @@ class SaleEstimateJob(models.Model):
             rec._prepare_quotation_line(quotation)
             rec.quotation_id = quotation.id
         rec.state = 'quotesend'
-            
+
+
+
+class confirm_approve(models.TransientModel):
+    _name = 'approval.message'
+
+
+    text= fields.Char(string="NOTE")
+
+    def btn_approve(self):
+        current_id = self.env.context.get('current_id', False)
+        estimate = self.env['sale.estimate.job'].browse(current_id)
+        su_id = self.env['res.users'].browse(SUPERUSER_ID)
+
+        for order in estimate:
+            order.write({'state': 'approve',})
+            partner = self.env.user.partner_id
+            # order.sudo().message_post(body=self.text, message_type='notification', author_id=partner.id)
+            partner_ids = [order.partner_id.id]
+            order.sudo().message_post(body=self.text, message_type='comment', partner_ids=partner_ids)
+            template_id = self.env.ref('job_cost_estimate_customer.approve_mail')
+            email_values = {'email_to': order.user_id.partner_id.email,
+                            'email_from': self.env.user.email,
+                                # su_id.partner_id.email
+                            }
+            template_id.send_mail(order.id, email_values=email_values, force_send=True)
+        return
+
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

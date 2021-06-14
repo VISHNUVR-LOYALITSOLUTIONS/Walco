@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Email template -->
+        <record id="approve_mail" model="mail.template">
+            <field name="name">Approve Estimate - Send by Email</field>
+<!--            <field name="email_from">${(object.company_id.email)}</field>-->
+            <field name="subject">${object.company_id.name} ${object.state in ('draft', 'sent') and 'Estimate' or 'Order'} (Ref ${object.number or 'n/a' })</field>
+<!--            <field name="email_to">${object.partner_id.email}</field>-->
+            <field name="model_id" ref="job_cost_estimate_customer.model_sale_estimate_job"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear,
+
+<p>
+Here is your approved estimate of ${object.number} <strong>${object.name}</strong> with
+% if object.origin:
+(with reference: ${object.origin} )
+% endif
+<strong> Total Job Estimate       </strong> amounting in <strong>${object.estimate_total} ${object.pricelist_id.currency_id.name}</strong>
+from ${object.company_id.name}.
+</p>
+
+    <br/><br/>
+
+<p>You can reply to this email if you have any questions.</p>
+<p>Thank you,</p>
+
+<p style="color:#eeeeee;">
+% if object.user_id and object.user_id.signature:
+    ${object.user_id.signature | safe}
+% endif
+</p>
+]]></field>
+        </record>
+
+    </data>
+</odoo>
+

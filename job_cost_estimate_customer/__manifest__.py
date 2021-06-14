@@ -222,8 +222,13 @@ sales estimates
         'security/estimate_security.xml',
         'report/estimate_report.xml',
         'data/estimate_sequence.xml',
+
+        'data/access_denied_mail.xml',
+        'data/approve_mail.xml',
+        'data/revised_mail.xml',
         'data/estimate_mail.xml',
         'views/views.xml',
+        'views/approval.xml',
 
         'views/sale_estimate_views.xml',
         'views/job_type.xml',
