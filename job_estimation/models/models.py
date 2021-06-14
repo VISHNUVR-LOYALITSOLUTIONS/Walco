@@ -6,19 +6,6 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 
 
-# class SaleOrderLine(models.Model):
-#
-#     _inherit = "sale.order.line"
-
-    # @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id','markup')
-    # def _compute_amount(self):
-    #
-    #     res = super(SaleOrderLine, self)._compute_amount()
-    #     for i in self:
-    #         if i.markup:
-    #             i.price_subtotal = i.price_subtotal + i.markup
-    #     return res
-
 
 class CrmLead(models.Model):
     _inherit = 'crm.lead'

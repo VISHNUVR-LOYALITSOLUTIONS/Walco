@@ -8,6 +8,9 @@ import odoo.addons.decimal_precision as dp
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    product_group = fields.Many2one('product.group',string="Group")
+    product_subgroup = fields.Many2one('product.subgroup', string="Sub Group")
+
     job_type = fields.Selection(
         selection=[('material', 'Material'),
                    ('consumable', 'Consumable'),
@@ -61,6 +64,22 @@ class SaleEstimateJob(models.Model):
         domain=[('job_type', '=', 'estimation')],
     )
 
+    outsourced_labour_line_ids = fields.One2many(
+        'sale.estimate.line.job',
+        'estimate_id',
+        'Estimate Lines',
+        copy=True,
+        domain=[('job_type', '=', 'outsourced_labour')],
+    )
+
+    outsourced_vehicle_line_ids = fields.One2many(
+        'sale.estimate.line.job',
+        'estimate_id',
+        'Estimate Lines',
+        copy=True,
+        domain=[('job_type', '=', 'outsourced_vehicle')],
+    )
+
     consumable_total = fields.Float(
         compute='_compute_consumable_total',
         string='Total Consumable Estimate',
@@ -81,6 +100,18 @@ class SaleEstimateJob(models.Model):
     others_total = fields.Float(
         compute='_compute_others_total',
         string='Total Others Estimate',
+        store=True
+    )
+
+    outsourced_labour_total = fields.Float(
+        compute='_compute_outsourced_labour',
+        string='Total Outsourced Labour',
+        store=True
+    )
+
+    outsourced_vehicle_total = fields.Float(
+        compute='_compute_outsourced_vehicle',
+        string='Total Outsourced vehicle',
         store=True
     )
 
@@ -107,11 +138,13 @@ class SaleEstimateJob(models.Model):
         'consumable_total',
         'logistics_total',
         'outsourced_total',
-        'others_total'
+        'others_total',
+        'outsourced_labour_total',
+        'outsourced_vehicle_total',
     )
     def _compute_job_estimate_total(self):
         for rec in self:
-            rec.estimate_total = rec.total + rec.labour_total + rec.overhead_total+rec.consumable_total + rec.logistics_total + rec.outsourced_total
+            rec.estimate_total = rec.total + rec.labour_total + rec.overhead_total+rec.consumable_total + rec.logistics_total + rec.outsourced_total + rec.outsourced_labour_total + rec.outsourced_vehicle_total
                                  # +rec.others_total
             
     @api.depends('consumable_estimate_line_ids.price_subtotal')
@@ -141,6 +174,20 @@ class SaleEstimateJob(models.Model):
             rec.others_total = 0.0
             for line in rec.other_estimate_line_ids:
                 rec.others_total += line.price_subtotal
+
+    @api.depends('outsourced_vehicle_line_ids.price_subtotal')
+    def _compute_outsourced_vehicle(self):
+        for rec in self:
+            rec.outsourced_vehicle_total = 0.0
+            for line in rec.outsourced_vehicle_line_ids:
+                rec.outsourced_vehicle_total += line.price_subtotal
+
+    @api.depends('outsourced_labour_line_ids.price_subtotal')
+    def _compute_outsourced_labour(self):
+        for rec in self:
+            rec.outsourced_labour_total = 0.0
+            for line in rec.outsourced_labour_line_ids:
+                rec.outsourced_labour_total += line.price_subtotal
         
 
 
@@ -240,6 +287,34 @@ class SaleEstimateJob(models.Model):
                 mon6 = (0, 0, vals6)
                 post_list.append(mon6)
                 # post_list.append([0, 0, vals6])
+            for line in rec.outsourced_labour_line_ids:
+                vals7 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon7 = (0, 0, vals7)
+                post_list.append(mon7)
+            for line in rec.outsourced_vehicle_line_ids:
+                vals8 = {
+                    'job_type': 'estimation',
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.product_uom_qty,
+                    'product_uom': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'price_subtotal': line.price_subtotal,
+                    'product_description': line.product_description,
+                    # 'total': self.total,
+                    'discount': line.discount,
+                }
+                mon8 = (0, 0, vals8)
+                post_list.append(mon8)
 
             # post_list.append([0, 0, val])
             self.post_estimate_line_ids = [(6, 0, [])]
@@ -248,13 +323,13 @@ class SaleEstimateJob(models.Model):
         return super(SaleEstimateJob, self).estimate_confirm()
             
     # @api.multi
-    def estimate_approve(self):
-        res= super(SaleEstimateJob, self).estimate_approve()
-        for rec in self:
-            # if not rec.consumable_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.other_estimate_line_ids:
-            #     raise UserError(_('Please enter Estimation Lines!'))
-            rec.state = 'approve'
-        return res
+    # def estimate_approve(self):
+    #     res= super(SaleEstimateJob, self).estimate_approve()
+    #     for rec in self:
+    #         # if not rec.consumable_estimate_line_ids and not rec.logistics_estimate_line_ids and not rec.outsourced_estimate_line_ids and not rec.other_estimate_line_ids:
+    #         #     raise UserError(_('Please enter Estimation Lines!'))
+    #         rec.state = 'approve'
+    #     return res
 
 
     # @api.multi
