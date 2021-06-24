@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record model="res.groups" id="user_restrict_product_creation">
+            <field name="name">Restrict Product Creation</field>
+        </record>
+
+    </data>
+</odoo>
