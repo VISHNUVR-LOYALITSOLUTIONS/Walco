@@ -1,8 +1,9 @@
 <odoo>
    <data>
     <template id="walco_sale_template_document">
-                       <t t-call="sale_order_print.walco_sale_print_external_layout">
-                           <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                       <t t-call="sale_order_print.walco_sale_print_external_layout" t-lang="o.partner_id.lang">
+<!--                           <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>-->
+<!--                           <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />-->
 
                         <br></br>
 
@@ -110,11 +111,19 @@
                                 <tbody>
 
 
+                                <t t-set="new" t-value="0"/>
 
-                                        <tr t-foreach="o.order_line" t-as="l" style="padding:5px;">
+                                    <tr t-foreach="o.order_line" t-as="l" style="padding:5px;">
                                          <t t-if="not l.display_type">
+
+
+
+                                              <t t-if="l.estimate_bool==False">
+
                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
-                                            <t t-esc="l_index+1"/>
+<!--                                            <t t-esc="l_index+1"/>-->
+                                             <t t-set="new" t-value="new + 1"/>
+                                            <t t-esc="new"/>
                                         </td>
 
                                         <td class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
@@ -161,6 +170,8 @@
                                                <t t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
 <!--                                             <t t-esc="l.price_subtotal"/>-->
                                         </td>
+                                              </t>
+
                                          </t>
 
                                          <t t-if="l.display_type == 'line_section'">
