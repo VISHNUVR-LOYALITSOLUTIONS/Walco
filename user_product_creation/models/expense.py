@@ -17,11 +17,11 @@ class ProductProduct(models.Model):
             subproduct_list = []
             mainproduct_list = []
             subproduct_id = self.env["product.product"].search([('sub_product', '=', True)])
-            mainproduct_id = self.env["product.product"].search([('sub_product', '=', False)])
+            mainproduct_id = self.env["product.product"].search([('sub_product', '=', False),('can_be_expensed', '=', True),])
             for main_line_id in mainproduct_id:
                 mainproduct_list.append(main_line_id.id)
             for line_id in subproduct_id:
                 subproduct_list.append(line_id.id)
             result = \
-                {'domain': {'product_id': [('id', 'in', mainproduct_list)], 'sub_product_id': [('id', 'in', subproduct_list)]}}
+                {'domain': {'product_id': [('id', 'in', mainproduct_list),], 'sub_product_id': [('id', 'in', subproduct_list)]}}
             return result
