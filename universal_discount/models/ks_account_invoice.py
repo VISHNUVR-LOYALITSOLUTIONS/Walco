@@ -154,56 +154,59 @@ class KsGlobalDiscountInvoice(models.Model):
                             else:
                                 discount_percent = 100 - total_discount
 
+                            tot_val =  (self.amount_total * (self.invoice_payment_term_id.line_ids[
+                                                               record].value_amount if not discount_percent else discount_percent) / 100)
+                            tot_val_credit = ((self.amount_total * self.invoice_payment_term_id.line_ids[record].value_amount) / 100)
 
-                            amount_value = self.invoice_payment_term_id.line_ids[record].value_amount
+
+
                             if self.currency_id and self.currency_id != self.company_id.currency_id:
-                                amount_value = self.currency_id._convert(self.invoice_payment_term_id.line_ids[record].value_amount, self.company_id.currency_id,
+                                tot_val = self.currency_id._convert(tot_val, self.company_id.currency_id,
                                                                   self.company_id,
                                                                   self.date)
-                                discount_percent = self.currency_id._convert(discount_percent, self.company_id.currency_id,
+                                tot_val_credit= self.currency_id._convert(tot_val_credit, self.company_id.currency_id,
                                                                   self.company_id,
                                                                   self.date)
-                                self.amount_total = self.currency_id._convert(self.amount_total,
-                                                                             self.company_id.currency_id,
-                                                                             self.company_id,
-                                                                             self.date)
+
 
 
                             terms_lines[record].update({
                                 'amount_currency': -total_amount_currency,
-                                'debit': (self.amount_total * (amount_value if not discount_percent else discount_percent) / 100) if total_balance < 0.0 else 0.0,
-                                'credit': ((self.amount_total * amount_value) / 100) if total_balance > 0.0 else 0.0
+                                'debit': tot_val if total_balance < 0.0 else 0.0,
+                                'credit':tot_val_credit if total_balance > 0.0 else 0.0
                             })
                         else:
+                            amount_total = self.amount_total
                             if self.currency_id and self.currency_id != self.company_id.currency_id:
 
-                                self.amount_total =self.currency_id._convert(self.amount_total, self.company_id.currency_id,
+                                amount_total =self.currency_id._convert(self.amount_total, self.company_id.currency_id,
                                                               self.company_id,
                                                               self.date)
                             terms_lines[record].update({
                                 'amount_currency': -total_amount_currency,
-                                'debit': self.amount_total if total_balance < 0.0 else 0.0,
-                                'credit': self.amount_total if total_balance > 0.0 else 0.0
+                                'debit': amount_total if total_balance < 0.0 else 0.0,
+                                'credit': amount_total if total_balance > 0.0 else 0.0
                             })
                 else:
                     for record in terms_lines:
                         if rec.ks_global_discount_type == "percent":
+                            ks_global_discount_rate = self.ks_global_discount_rate
                             if self.currency_id and self.currency_id != self.company_id.currency_id:
-                                self.ks_global_discount_rate = self.currency_id._convert(self.ks_global_discount_rate,
+                                ks_global_discount_rate = self.currency_id._convert(self.ks_global_discount_rate,
                                                                               self.company_id.currency_id,
                                                                               self.company_id,
                                                                               self.date)
                             record.update({
                                 'amount_currency': -total_amount_currency,
                                 'debit': (record.debit - ((
-                                                                  record.debit * self.ks_global_discount_rate) / 100)) if total_balance < 0.0 else 0.0,
+                                                                  record.debit * ks_global_discount_rate) / 100)) if total_balance < 0.0 else 0.0,
                                 'credit': (record.credit - ((
-                                                                    record.credit * self.ks_global_discount_rate) / 100)) if total_balance > 0.0 else 0.0
+                                                                    record.credit * ks_global_discount_rate) / 100)) if total_balance > 0.0 else 0.0
                             })
                         else:
                             discount = rec.ks_global_discount_rate / len(terms_lines)
                             if rec.currency_id and rec.currency_id != rec.company_id.currency_id:
-                                discount = self.currency_id._convert(discount,rec.company_id.currency_id,
+                                discount = rec.currency_id._convert(discount,rec.company_id.currency_id,
                                                                               rec.company_id,
                                                                               rec.date)
                             record.update({
