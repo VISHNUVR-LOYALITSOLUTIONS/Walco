@@ -8,8 +8,14 @@
         <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//sheet/group/group/div/div/field[@name='number_of_hours_display']" position="before">
+                <field name="hours_value" invisible="1"/>
+                <field name="hours_calc"/>
+            </xpath>
+
+
                  <xpath expr="//sheet/group/group/div/div/field[@name='number_of_hours_display']" position="attributes">
-<!--                     <attribute name="attrs">{'readonly': False}</attribute>-->
+<!--                        <attribute name="invisible">0</attribute>-->
                       <attribute name="readonly">False</attribute>
                      <attribute name="readonly">0</attribute>
 
