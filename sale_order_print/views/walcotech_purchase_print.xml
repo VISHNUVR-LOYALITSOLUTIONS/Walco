@@ -1,0 +1,351 @@
+<odoo>
+   <data>
+    <template id="walcotech_sale_template_document">
+                       <t t-call="sale_order_print.walcotech_sale_print_external_layout">
+<!--                           <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>-->
+                           <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+
+                        <br></br>
+
+
+                                              <div class="page">
+                    <style type="text/css">
+<!--                        .Row {-->
+<!--                        display: table;-->
+<!--                        width: 100%; /*Optional*/-->
+<!--                        }-->
+
+
+                        @font-face {
+                        font-family: 'calibri';
+                         src: local('calibri'), local('calibri'),
+                        src: url('/sale_order_print/static/src/fonts/calibri/Calibri.ttf') format('opentype');
+                        }
+
+                        @font-face {
+                        font-family: 'Countryside';
+                         src: local('Countryside'), local('Countryside'),
+                        src: url('/sale_order_print/static/src/fonts/countryside-font/CountrysideTwo-r9WO.ttf') format('truetype');
+                        }
+
+                        @font-face {
+                        font-family: 'Arial';
+                        src: local('Arial'), local('Arial'),
+                        src: url(/sale_order_print/static/src/fonts/arial.ttf') format('truetype');
+                        }
+                        @font-face {
+                        font-family: 'Verdana';
+                        src: url(/sale_order_print/static/src/fonts/verdana.ttf') format('truetype');
+                        }
+
+                        .arabic-font {
+                        font-family: arial;
+                        }
+
+                        .en-font {
+                        font-family: arial;
+                        }
+                        tr,th, td {
+                    padding-left: 3px;
+                    padding-left: 3px;
+                    }
+<!--                        th, td {-->
+<!--                        padding: 3px;-->
+<!--                        }-->
+                        tr{
+                        page-break-inside: avoid;
+                        }
+                        table {
+                        width: 100%;
+                        }
+                    </style>
+
+
+<div class="row">
+    <div class="col-12">
+        <table style="font-size: 14px;padding:5px;"
+                                   width="100%;">
+                                 <tr class="en-font" style="padding:5px;font-size: 14px;">
+                                     <td colspan="8" style="border:1px solid black;padding:5px;font-size: 14px;">
+                                          <div class="en-font" style="font-weight:bold;">Supplier</div>
+                                    <p class="en-font">
+                                    <t t-if="o.company_id.partner_id" class="en-font">
+                                    <t t-esc="o.company_id.partner_id" t-options='{ "widget": "contact", "fields": [ "name", "address", "phone", "email"],"no_marker": True,}'/>
+
+                                </t>
+
+                            </p>
+
+                                     </td>
+                                 </tr>
+
+                             </table>
+    </div>
+</div>
+
+                                        <div class="row">
+                        <div class="col-12">
+
+                              <table style="font-size: 14px; margin-top: 15px;"
+                                   width="100%;" cellspacing="0" borderspacing="0">
+
+<!--                            <table border="0" style="font-size: 14px;" width="100%;">-->
+                                <thead>
+
+                                    <tr style="text-align:center; font-weight:bold;padding:5px;">
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;">Sl No</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 22%;border : 1px solid black;border-collapse:collapse;">Products</th>
+
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                            width: 22%;text-align:center;vertical-align:middle;">
+                                            Description Of Goods
+                                        </th>
+
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;">Unit</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;">Quantity</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 11%;border : 1px solid black;border-collapse:collapse;">Rate</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;">Disc %</th>
+                                        <th class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 15%;border : 1px solid black;border-collapse:collapse;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                        <t t-set="new" t-value="0"/>
+                                        <tr t-foreach="o.order_line" t-as="l" style="padding:5px;">
+
+                                         <t t-if="not l.display_type">
+                                             <t t-if="l.estimate_bool==False">
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+<!--                                            <t t-esc="l_index+1"/>-->
+                                            <t t-set="new" t-value="new + 1"/>
+                                            <t t-esc="new"/>
+                                        </td>
+
+                                        <td class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                    <t t-esc="l.product_id.name"/>
+                                                </span>
+
+
+                                        </td>
+
+                                              <td class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                    <t t-esc="l.name"/>
+                                                </span>
+
+
+                                        </td>
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">-->
+<!--                                            <t t-if="o.due_on_date">-->
+<!--                                            <t t-esc="datetime.datetime.strptime(str(o.due_on_date), '%Y-%m-%d %H:%M:%S').strftime('%d-%b-%Y')"/>-->
+<!--                                            </t>-->
+<!--                                        </td>-->
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                                <span class="en-font" style="text-align:center;vertical-align:middle;">
+                                                    <t t-esc="l.product_uom.name"/>
+                                                </span>
+
+                                        </td>
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                            <span t-field="l.product_uom_qty"/>
+                                        </td>
+                                        <td class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                               <t t-esc="'{:,.2f}'.format(l.price_unit)"/>
+<!--                                                <t t-esc="l.price_unit"/>-->
+                                        </td>
+
+                                         <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                                <t t-if="l.discount">
+                                                    <t t-esc="'{:,.2f}'.format(l.discount)"/>
+
+                                            </t>
+                                         </td>
+                                         <td class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                               <t t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+<!--                                             <t t-esc="l.price_subtotal"/>-->
+                                        </td>
+                                             </t>
+                                         </t>
+
+                                         <t t-if="l.display_type == 'line_section'">
+
+
+                                             <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                            <t t-esc="l_index+1"/>
+                                        </td>
+
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                    <span t-field="l.name"/>
+                                                </span>
+
+
+                                        </td>
+
+                            </t>
+                            <t t-if="l.display_type == 'line_note'">
+
+                                <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;border:1px solid black;border-collapse:collapse;">
+                                    <t t-esc="l_index+1"/>
+
+                                        </td>
+
+                                        <td colspan="7" class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
+                                                <span class="en-font" style="text-align:left;vertical-align:middle;">
+                                                   <span t-field="l.name"/>
+                                                </span>
+
+
+                                        </td>
+
+                            </t>
+
+                                    </tr>
+
+
+                                     <tr style="text-align:center; font-weight:bold;padding:5px;">
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                            width: 31%;text-align:right;vertical-align:middle;">
+                                            Subtotal
+                                        </td>
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 12%;border : 1px solid black;border-collapse:collapse;"></td>-->
+
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 11%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+                                        <td class="en-font" style="padding:5px;text-align:right;vertical-align:middle;width: 15%;border : 1px solid black;border-collapse:collapse;">
+                                            <t t-esc="'{:,.2f}'.format(o.amount_untaxed)"/>
+<!--                                            <t t-esc="o.currency_id.name"/>-->
+                                            <t t-esc="o.currency_id.symbol"/>
+                                        </td>
+                                    </tr>
+
+
+                                     <tr style="text-align:center; font-weight:bold;padding:5px;">
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                            width: 31%;text-align:right;vertical-align:middle;">
+                                            Tax
+                                        </td>
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 12%;border : 1px solid black;border-collapse:collapse;"></td>-->
+
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 11%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+                                        <td class="en-font" style="padding:5px;text-align:right;vertical-align:middle;width: 15%;border : 1px solid black;border-collapse:collapse;">
+                                            <t t-esc="'{:,.2f}'.format(o.amount_tax)"/>
+<!--                                            <t t-esc="o.currency_id.name"/>-->
+                                            <t t-esc="o.currency_id.symbol"/>
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                                     <tr style="text-align:center; font-weight:bold;padding:5px;">
+                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 6%;border : 1px solid black;border-collapse:collapse;"></td>
+                                        <td colspan="6" class="en-font" style="padding:5px;text-align:right;vertical-align:middle;border : 1px solid black;border-collapse:collapse;
+                                            width: 31%;text-align:right;vertical-align:middle;">
+                                            Total
+                                        </td>
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 12%;border : 1px solid black;border-collapse:collapse;"></td>-->
+
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 11%;border : 1px solid black;border-collapse:collapse;"></td>-->
+<!--                                        <td class="en-font" style="padding:5px;text-align:center;vertical-align:middle;width: 8%;border : 1px solid black;border-collapse:collapse;"></td>-->
+                                        <td class="en-font" style="padding:5px;text-align:right;vertical-align:middle;width: 15%;border : 1px solid black;border-collapse:collapse;">
+                                            <t t-esc="'{:,.2f}'.format(o.amount_total)"/>
+<!--                                            <t t-esc="o.currency_id.name"/>-->
+                                            <t t-esc="o.currency_id.symbol"/>
+                                        </td>
+                                    </tr>
+
+
+
+                                     <tr align="left" style="font-weight:bold;padding:5px;font-size:13px;">
+
+                                         <td class="en-font" align="left" colspan="4" style="padding:5px;border-left: 1px solid black;border-top: 1px solid black;border-collapse:collapse;">
+                                             Amount (In Words)
+
+                                         </td>
+
+                                          <td class="en-font" align="right" colspan="4" style="padding:5px;border-right: 1px solid black;border-top: 1px solid black;border-collapse:collapse;">
+<!--                                             E.&amp;amp;O.E-->
+
+                                         </td>
+
+                                    </tr>
+
+                                     <tr align="left" style="font-weight:bold;padding:5px;font-size:13px;">
+
+                                         <td class="en-font" align="left" colspan="8" style="padding:5px;border-left: 1px solid black;border-bottom: 1px solid black;border-right: 1px solid black;border-collapse:collapse;">
+
+                                              <b>
+                                                <t t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                                              </b>
+                                         </td>
+
+                                    </tr>
+
+
+                                 </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                     <div class="row">
+                             <div class="col-12">
+                                        <table border="0" style="font-size: 14px;padding:5px;"
+                                                       width="100%;">
+                                                     <tr class="en-font" style="padding:5px;font-size: 14px;">
+                                                         <td colspan="8" style="padding:5px;font-size: 14px;">
+                                                              <div class="en-font" style="font-weight:bold;font-size: 14px;">
+                                                                 <u class="en-font">
+                                                                     <b>
+                                                                        Terms &amp;amp; Conditions :-
+                                                                    </b><br/>
+                                                                 </u>
+
+<!--                                                                   <pre id="break" class="en-font" style="white-space: pre-line;text-align:left;font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;page-break-inside: avoid;">-->
+<!--                                                                 <t t-esc="o.note"/>-->
+<!--                                                                    </pre>-->
+
+<!--                                                                   <pre id="break" class="en-font" style="text-align:left;font-weight:bold;font-size:13px;font-family: Arial, Helvetica, sans-serif;page-break-inside: avoid;">-->
+<!--                                                                 <t t-esc="o.note"/>-->
+<!--                                                                    </pre>-->
+                                                              </div>
+
+                                                         </td>
+                                                     </tr>
+
+                                                 </table>
+
+                                 <p class="en-font" style="font-weight:bold;font-size:13px;" t-field="o.note"/>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+ </t>
+<!-- </t>-->
+</template>
+
+
+        <template id="walcotech_sale_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="sale_order_print.walcotech_sale_template_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+

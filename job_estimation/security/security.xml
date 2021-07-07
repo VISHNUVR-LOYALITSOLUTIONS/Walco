@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+         <record model="res.groups" id="group_security_fleet_user" >
+                <field name="name">Fleet Visibility</field>
+        </record>
+
+
+            <record id="fleet.menu_root" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('group_security_fleet_user')])]"/>
+            </record>
+
+        <record model="res.groups" id="group_security_Employee_user" >
+                <field name="name">Employee Visibility</field>
+        </record>
+
+
+            <record id="hr.menu_hr_root" model="ir.ui.menu" >
+                 <field name="groups_id" eval="[(6, 0, [ref('group_security_Employee_user')])]"/>
+            </record>
+    </data>
+</odoo>

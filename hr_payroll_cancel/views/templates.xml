@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_account_journal_update_posted" model="ir.ui.view">
+            <field name="name">account.journal.updateposted.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="update_posted"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
