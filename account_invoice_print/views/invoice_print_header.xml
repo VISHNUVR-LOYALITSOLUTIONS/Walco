@@ -104,7 +104,8 @@
 
                                         <td class="en-font" style="padding:5px;border:1px solid black;border-collapse:collapse;text-align:left;vertical-align:middle;">
                                                 <span class="en-font" style="text-align:left;vertical-align:middle;">
-                                                    <t t-esc="l.product_id.name"/>
+<!--                                                    <t t-esc="l.product_id.name"/>-->
+                                                     <t t-esc="l.name"/>
                                                 </span>
 
 
