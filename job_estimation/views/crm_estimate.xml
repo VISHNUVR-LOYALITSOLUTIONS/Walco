@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record id="sale_action_estimation_new" model="ir.actions.act_window">
+        <field name="name">Estimation</field>
+        <field name="res_model">sale.estimate.job</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="domain">[('opportunity_id', '=', active_id)]</field>
+        <field name="context">{'search_default_opportunity_id': active_id, 'default_opportunity_id': active_id}</field>
+    </record>
+
+            <record id="crm_case_form_view_estimation" model="ir.ui.view">
+            <field name="name">crm.lead.estimation.inherited.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                    <button string="New Estimation" name="action_estimation_new" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|', ('type', '=', 'lead'), '&amp;', ('probability', '=', 0), ('active', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//button[@name='action_view_sale_quotation']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+            </record>
+    </data>
+</odoo>

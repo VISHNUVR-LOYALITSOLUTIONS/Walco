@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+
+
+        <record id="product_group_action" model="ir.actions.act_window">
+            <field name="name">Product Group</field>
+            <field name="res_model">product.group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="product_group_view" model="ir.ui.view">
+            <field name="name">Product Group</field>
+            <field name="model">product.group</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Group Name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="group_group_by" model="ir.ui.view">
+            <field name="name">product.template.search.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                      <filter string="Group" name="product_group" context="{'group_by':'product_group'}"/>
+                     <filter string="Sub Group" name="product_subgroup" context="{'group_by':'product_subgroup'}"/>
+                </xpath>
+            </field>
+        </record>
+
+         <menuitem id="product_group_form_id"
+                   name="Product Group"
+                   action="product_group_action"
+                   parent="sale.prod_config_main"
+                   sequence="15"/>
+
+
+
+
+                <record id="product_subgroup_action" model="ir.actions.act_window">
+            <field name="name">Product SubGroup</field>
+            <field name="res_model">product.subgroup</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="product_subgroup_view" model="ir.ui.view">
+            <field name="name">Product Sub Group</field>
+            <field name="model">product.subgroup</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Group Name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+         <menuitem id="product_subgroup_form_id"
+                   name="Product SubGroup"
+                   action="product_subgroup_action"
+                   parent="sale.prod_config_main"
+                   sequence="20"/>
+    </data>
+</odoo>

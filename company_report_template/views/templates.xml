@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+
+
+
+<!--        <data noupdate = "1">-->
+<!--       <function name = "write" model = "ir.model.data">-->
+<!--           <function name = "search" model = "ir. model.data ">-->
+<!--               <value eval =" [('name', '=', 'mail_template_sale_confirmation'), ('module', '=', 'sale')] "/>-->
+<!--           </function>-->
+<!--           <value eval = "{'noupdate': False}" />-->
+<!--       </function>-->
+<!--            <record id="sale.email_template_edi_sale" model="mail.template">-->
+<!--             <field name="report_template" ref="sale_order_print.walcotech_sale_order_print"/>-->
+<!--            </record>-->
+<!--       <record id="sale.mail_template_sale_confirmation" model="mail.template">-->
+<!--              <field name="report_template" ref="sale_order_print.walcotech_sale_order_print"/>-->
+<!--            % if object.company_id.sale_reports == 'walcotech':-->
+<!--                <field name = "report_template" ref="sale_order_print.walcotech_sale_order_print"/>-->
+<!--            % endif-->
+<!--             % if object.company_id.sale_reports == 'walco':-->
+<!--                <field name="report_template" ref="sale_order_print.walco_sale_order_print"/>-->
+<!--            % endif-->
+<!--             % if object.company_id.sale_reports == 'texerv':-->
+<!--                <field name="report_template" ref="sale_order_print.texerv_sale_order_print"/>-->
+<!--            % endif-->
+<!--            % if object.company_id.sale_reports == 'odoo_standard':-->
+<!--                <field name="report_template" ref="sale.action_report_saleorder"/>-->
+<!--            % endif-->
+<!--                <field name = "report_template" eval="False"/>-->
+<!--        </record>-->
+
+<!--       <function name = "write" model = "ir.model.data">-->
+<!--           <function name = "search" model = "ir.model.data">-->
+<!--               <value eval = "[('name', '=', ' mail_template_sale_confirmation '), (' module ',' = ',' sale ')] "/>-->
+<!--           </function>-->
+<!--           <value eval =" {' noupdate ': True} "/>-->
+<!--       </function>-->
+<!--   </data>-->
+
+
+
+
+<!--         <record id = "sale.email_template_edi_sale" model="mail.template">-->
+<!--                % if object.company_id.sale_reports == 'walcotech':-->
+<!--                <field name="report_template" ref="sale_order_print.walcotech_sale_order_print"/>-->
+<!--            % endif-->
+<!--             % if object.company_id.sale_reports == 'walco':-->
+<!--                <field name = "report_template" ref="sale_order_print.walco_sale_order_print"/>-->
+<!--            % endif-->
+<!--             % if object.company_id.sale_reports == 'texerv':-->
+<!--                <field name = "report_template" ref="sale_order_print.texerv_sale_order_print"/>-->
+<!--            % endif-->
+<!--            % if object.company_id.sale_reports == 'odoo_standard':-->
+<!--                <field name = "report_template" ref="sale.action_report_saleorder"/>-->
+<!--            % endif-->
+<!--        </record>-->
+
+<!--            <template id="custom_report_saleorder" inherit_id="sale.report_saleorder">-->
+<!--                  <xpath expr="//t[@t-call='web.html_container']" position="replace">-->
+<!--                    <t t-call="web.html_container">-->
+<!--                        <t t-foreach="docs" t-as="o">-->
+<!--                            <t t-if="o.company_id.sale_reports == 'walcotech'">-->
+<!--&lt;!&ndash;                                  <record id="sale.action_report_saleorder" model="ir.actions.report">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="pdf_watermark" type="base64" file="company_report_template/static/description/src/img/header___footer-1.jpg"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="paperformat_id" ref="sale_order_print.paperformat_walcotech_sale_print"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                  </record>&ndash;&gt;-->
+<!--                                <t t-call="sale_order_print.walcotech_sale_template_document" t-lang="o.partner_id.lang"/>-->
+
+<!--                            </t>-->
+<!--                            <t t-if="o.company_id.sale_reports == 'texerv'">-->
+<!--&lt;!&ndash;                                 <record id="sale.action_report_saleorder" model="ir.actions.report">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="pdf_watermark" type="base64" file="company_report_template/static/description/src/img/0001.jpg"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="paperformat_id" ref="sale_order_print.paperformat_texerv_sale_print"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                 </record>&ndash;&gt;-->
+<!--                                <t t-call="sale_order_print.texerv_sale_template_document" t-lang="o.partner_id.lang"/>-->
+
+<!--                            </t>-->
+<!--                            <t t-if="o.company_id.sale_reports == 'walco'">-->
+<!--&lt;!&ndash;                                 <record id="sale.action_report_saleorder" model="ir.actions.report">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="pdf_watermark" type="base64" file="company_report_template/static/description/src/img/header___footer-2.jpg"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="paperformat_id" ref="sale_order_print.paperformat_walco_sale_print"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                 </record>&ndash;&gt;-->
+<!--                                <t t-call="sale_order_print.walco_sale_template_document" t-lang="o.partner_id.lang"/>-->
+
+<!--                            </t>-->
+<!--                            <t t-if="o.company_id.sale_reports == 'odoo_standard'">-->
+<!--                                <t t-call="sale.report_saleorder_document" t-lang="o.partner_id.lang"/>-->
+<!--                            </t>-->
+<!--                        </t>-->
+<!--                    </t>-->
+<!--                  </xpath>-->
+<!--            </template>-->
+
+    </data>
+</odoo>

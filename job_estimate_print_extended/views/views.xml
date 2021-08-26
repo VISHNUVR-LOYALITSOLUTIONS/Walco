@@ -1,0 +1,271 @@
+<odoo>
+  <data>
+
+
+                 <template id="extended_estimate_print" inherit_id="job_cost_estimate_customer.estimate_print">
+
+                 <xpath expr="//t[@t-call='web.html_container']/t[@t-foreach='docs']/t[@t-call='web.external_layout']/div/div[5]" position="before">
+
+                     <div>
+                                    <h3>Consumable Estimation</h3>
+                                    <table class="table-bordered" border="1" style="width:100%;">
+                                        <thead>
+                                            <tr style="padding:5px;">
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Product</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Description</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Quantity</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;" groups="uom.group_uom">Unit of Measure</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Unit Price</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Discount</th>
+                                                <th style="padding:5px;verticle-align:center;" class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.consumable_estimate_line_ids" t-as="consumable_line">
+                                                <td>
+                                                    <span t-field="consumable_line.product_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="consumable_line.product_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="consumable_line.product_uom_qty"/>
+                                                </td>
+                                                <td  groups="uom.group_uom">
+                                                    <span t-field="consumable_line.product_uom"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="consumable_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="consumable_line.discount"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="consumable_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                     <div>
+                                    <h3>Logistics Estimation</h3>
+                                    <table class="table-bordered" border="1" style="width:100%;">
+                                        <thead style="padding:5px;">
+                                            <tr style="padding:5px;">
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Vehicle</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Description</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Price/Km</th>
+<!--                                                <th  groups="uom.group_uom">Unit of Measure</th>-->
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">No of Km</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Discount</th>
+                                                <th style="padding:5px;verticle-align:center;" class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.logistics_estimate_line_ids" t-as="logistics_line">
+                                                <td>
+                                                    <span t-field="logistics_line.vehicle_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="logistics_line.product_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="logistics_line.product_uom_qty"/>
+                                                </td>
+<!--                                                <td  groups="uom.group_uom">-->
+<!--                                                    <span t-field="logistics_line.product_uom"/>-->
+<!--                                                </td>-->
+                                                <td>
+                                                    <span t-field="logistics_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="logistics_line.discount"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="logistics_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                        <div>
+                                    <h3>Outsourced Labour Estimation</h3>
+                                    <table class="table-bordered" border="1" style="width:100%;">
+                                        <thead style="padding:5px;">
+                                            <tr style="padding:5px;">
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Employee</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Description</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Quantity</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;" groups="uom.group_uom">Unit of Measure</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Unit Price</th>
+<!--                                                <th>Discount</th>-->
+                                                <th style="padding:5px;verticle-align:center;" class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.outsourced_labour_line_ids" t-as="outsourced_labour_line">
+                                                <td>
+                                                    <span t-field="outsourced_labour_line.employee_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_labour_line.product_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_labour_line.product_uom_qty"/>
+                                                </td>
+                                                <td  groups="uom.group_uom">
+                                                    <span t-field="outsourced_labour_line.product_uom"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_labour_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+<!--                                                <td>-->
+<!--                                                    <span t-field="labour_line.discount"/>-->
+<!--                                                </td>-->
+                                                <td class="text-right">
+                                                    <span t-field="outsourced_labour_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                          <div>
+                                    <h3>Outsourced Vehicle Estimation</h3>
+                                    <table class="table-bordered" border="1" style="width:100%;">
+                                        <thead style="padding:5px;">
+                                            <tr style="padding:5px;">
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Vehicle</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Description</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Price/Km</th>
+<!--                                                <th  groups="uom.group_uom">Unit of Measure</th>-->
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">No of Km</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Discount</th>
+                                                <th style="padding:5px;verticle-align:center;" class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.outsourced_vehicle_line_ids" t-as="vehicle_line">
+                                                <td>
+                                                    <span t-field="vehicle_line.vehicle_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="vehicle_line.product_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="vehicle_line.product_uom_qty"/>
+                                                </td>
+<!--                                                <td  groups="uom.group_uom">-->
+<!--                                                    <span t-field="logistics_line.product_uom"/>-->
+<!--                                                </td>-->
+                                                <td>
+                                                    <span t-field="vehicle_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="vehicle_line.discount"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="vehicle_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                     <div>
+                                    <h3>Outsourced Estimation</h3>
+                                    <table class="table-bordered" border="1" style="width:100%;">
+                                        <thead style="padding:5px;">
+                                            <tr style="padding:5px;">
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Product</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Description</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Quantity</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;" groups="uom.group_uom">Unit of Measure</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Unit Price</th>
+                                                <th style="padding:5px;text-align:center;verticle-align:center;">Discount</th>
+                                                <th style="padding:5px;verticle-align:center;" class="text-right">Sub Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.outsourced_estimate_line_ids" t-as="outsourced_line">
+                                                <td>
+                                                    <span t-field="outsourced_line.product_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_line.product_description"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_line.product_uom_qty"/>
+                                                </td>
+                                                <td  groups="uom.group_uom">
+                                                    <span t-field="outsourced_line.product_uom"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="outsourced_line.discount"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="outsourced_line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+
+
+                 </xpath>
+
+                     <xpath expr="//t[@t-call='web.html_container']/t[@t-foreach='docs']/t[@t-call='web.external_layout']/div/div/div/table/tr[3]" position="before">
+                         <tr>
+                             <td><strong>Total Consumable Estimate</strong></td>
+                             <td class="text-right">
+                                 <span t-esc="doc.consumable_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                             </td>
+                         </tr>
+
+                         <tr>
+                             <td><strong>Total Logistics Estimate</strong></td>
+                             <td class="text-right">
+                                 <span t-esc="doc.logistics_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                             </td>
+                         </tr>
+
+
+                         <tr>
+                             <td><strong>Total Outsourced Labour Estimate</strong></td>
+                             <td class="text-right">
+                                 <span t-esc="doc.outsourced_labour_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                             </td>
+                         </tr>
+
+                         <tr>
+                             <td><strong>Total Outsourced Vehicle Estimate</strong></td>
+                             <td class="text-right">
+                                 <span t-esc="doc.outsourced_vehicle_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                             </td>
+                         </tr>
+
+                         <tr>
+                             <td><strong>Total Outsourced Estimate</strong></td>
+                             <td class="text-right">
+                                 <span t-esc="doc.outsourced_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                             </td>
+                         </tr>
+
+
+                 </xpath>
+
+
+          </template>
+
+
+  </data>
+</odoo>
