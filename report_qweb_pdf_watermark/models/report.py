@@ -24,7 +24,35 @@ except ImportError:
 class Report(models.Model):
     _inherit = 'ir.actions.report'
 
-    pdf_watermark = fields.Binary('Watermark')
+    pdf_watermark = fields.Binary('Watermark', compute='_compute_pdf_watermark_info')
+    is_watermark_required = fields.Boolean(default=False, string='Watermark Required')
+
+    @api.depends_context('company')
+    def _compute_pdf_watermark_info(self):
+        # pass
+        for record in self:
+            if not self.env.context.get('res_ids'):
+                if self.env.context.get('active_model') and self.env.context.get('active_id'):
+                    active_model = self.env[self.env.context['active_model']].browse(self.env.context['active_id'])
+                    company_id = active_model.company_id if 'company_id' in active_model else False
+                    if record.is_watermark_required:
+                        if company_id and company_id.pdf_watermark:
+                            record.pdf_watermark = company_id.pdf_watermark
+                        else:
+                            record.pdf_watermark = self.env.company.pdf_watermark
+                    else:
+                        record.pdf_watermark = False
+                else:
+                    if record.is_watermark_required and self.env.company.pdf_watermark:
+                        record.pdf_watermark = self.env.company.pdf_watermark
+                    else:
+                        record.pdf_watermark = False
+            else:
+                if record.is_watermark_required and record.model:
+                    company = self.env[record.model].browse(self.env.context['res_ids'][0]).company_id
+                    record.pdf_watermark = company.pdf_watermark
+                else:
+                    record.pdf_watermark = False
     pdf_watermark_expression = fields.Char(
         'Watermark expression', help='An expression yielding the base64 '
         'encoded data to be used as watermark. \n'

@@ -10,7 +10,7 @@
     "summary": "Add watermarks to your QWEB PDF reports",
     "website": "https://github.com/oca/reporting-engine",
     "depends": [
-        'web',
+        'web', 'header_footer_company'
     ],
     "data": [
         "demo/report.xml",
