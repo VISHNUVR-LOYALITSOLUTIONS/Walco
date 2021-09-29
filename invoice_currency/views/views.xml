@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+   <record id="currency_view_invoice_tree" model="ir.ui.view">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="currency_id"/>
+            </field>
+        </field>
+    </record>
+  </data>
+</odoo>
