@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+        <record id="timesheet_view_tree_colored" model="ir.ui.view">
+            <field name="name">account.analytic.line.tree.hr_timesheet</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='task_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True,'no_open':True}</attribute>
+                </xpath>
+            </field>
+        </record>
+  </data>
+</odoo>
