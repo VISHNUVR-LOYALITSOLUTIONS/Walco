@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <report
+                id="walco_sale_print_menu"
+                model="sale.order"
+                string="Sale Order Print"
+                report_type="qweb-pdf"
+                name="walco_sale_print.walco_sale_template"
+                file="walco_sale_print.walco_sale_template"
+                print_report_name = "(('Sale '+ object.name or 'Print').replace('/','')+'.pdf')"
+        />
+
+                <record id="paperformat_walco_sale_print_with_header" model="report.paperformat">
+            <field name="name">Sale PRINT</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">4</field>
+            <field name="margin_right">4</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+        <record id="walco_sale_print_menu" model="ir.actions.report">
+            <field name="paperformat_id" ref="walco_sale_print.paperformat_walco_sale_print_with_header"/>
+<!--            <field name="pdf_watermark"/>-->
+        </record>
+
+
+
+
+         <odoo>
+            <data>
+                 <template id="walco_sale_layout_header_my">
+              <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+                                    <div class="header" style="width:100%">
+                                     <style type="text/css">
+                    .Row {
+                    display: table;
+                    width: 100%; /*Optional*/
+                    }
+
+                    @font-face {
+                    font-family: 'calibri';
+                    src: url('/walco_sale_print/static/src/fonts/calibri/Calibri.ttf') format('opentype');
+                    }
+
+                    @font-face {
+                    font-family: 'Times New Roman';
+                    src: local('Times New Roman'), local('Times New Roman'),
+                    url(/walco_sale_print/static/src/fonts/times_new_roman.ttf') format('ttf');
+                    }
+
+                    @font-face {
+                    font-family: 'Arial';
+                    src: local('Arial'), local('Arial'),
+                    url(/walco_sale_print/static/src/fonts/arial.ttf') format('truetype');
+                    }
+                    @font-face {
+                    font-family: 'Verdana';
+                    src: local('Verdana'), local('Verdana'),
+                    url(/walco_sale_print/static/src/fonts/verdana.ttf') format('ttf');
+                    }
+
+                    .arabic-font {
+                    font-family: arial;
+                    }
+
+                    .en-font {
+                    font-family: Verdana;
+                    }
+                    .arabic_calibri{
+                    font-family: calibri;
+                    }
+                    th, td {
+                    padding: 3px;
+                    }
+                    tr{
+                        page-break-inside: avoid;
+                        }
+                </style>
+
+                                    <div class="row">
+                                        <div class="col-4" ></div>
+                                         <div class="col-4" style="ont-weight:bold;">
+                        <div class="arabic-font" style="text-align: center;font-size : 22px; font-weight: 900;"></div>
+                        <div class="en-font"
+                             style="font-family: 'font-a-bold';float:center;text-align:center;text-decoration: underline; margin-top:-9px;font-size : 22px; font-weight: 900;text-weight:bold;">
+
+                        <b t-if="o.state == 'draft'">QUOTATION</b>
+                        <b t-if="o.state != 'draft'">SALE ORDER</b>
+                        </div>
+
+                    </div>
+                                        <div class="col-4" >
+
+                                        </div>
+                                    </div>
+
+            </div>
+
+                       <div class="footer">
+
+                <div t-if="report_type == 'pdf'"  style="text-align:center;vertical-align:middle;font-size:14px;">
+
+                    Page <span class="page"/> of <span class="topage"/>
+                </div>
+            </div>
+
+        </template>
+
+
+        <template id="walco_print_external_layout">
+            <div class="article">
+                <t t-call="walco_sale_print.walco_sale_layout_header_my"/>
+                <t t-raw="0"/>
+            </div>
+        </template>
+
+            </data>
+        </odoo>
+
+    </data>
+</odoo>
