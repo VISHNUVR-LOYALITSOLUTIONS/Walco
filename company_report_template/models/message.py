@@ -17,7 +17,7 @@ class MailComposer(models.TransientModel):
     @api.model
     def generate_email_for_composer(self, template_id, res_ids, fields=None):
         res = super(MailComposer, self).generate_email_for_composer(template_id, res_ids, fields)
-        res[res_ids[0]]['attachments']=False
+        # res[res_ids[0]]['attachments']=False
 
         if self.env.context.get('active_model') and self.env.context.get('active_id'):
             active_model = self.env[self.env.context['active_model']].browse(self.env.context['active_id'])
@@ -29,21 +29,25 @@ class MailComposer(models.TransientModel):
                             pdf = self.env.ref('sale_order_print.walcotech_sale_order_print').sudo().render_qweb_pdf([i.id])[0]
                             pdf = base64.b64encode(pdf)
                             attachments = [('%s.pdf' % i.name, pdf)]
+                            res[res_ids[0]]['attachments'] = False
                             res[res_ids[0]]['attachments'] = attachments
                         elif company_id.sale_reports == 'walco':
                             pdf = self.env.ref('sale_order_print.walco_sale_order_print').sudo().render_qweb_pdf([i.id])[0]
                             pdf = base64.b64encode(pdf)
                             attachments = [('%s.pdf' % i.name, pdf)]
+                            res[res_ids[0]]['attachments'] = False
                             res[res_ids[0]]['attachments'] = attachments
                         elif company_id.sale_reports == 'texerv':
                             pdf = self.env.ref('sale_order_print.texerv_sale_order_print').sudo().render_qweb_pdf([i.id])[0]
                             pdf = base64.b64encode(pdf)
                             attachments = [('%s.pdf' % i.name, pdf)]
+                            res[res_ids[0]]['attachments'] = False
                             res[res_ids[0]]['attachments'] = attachments
                         elif company_id.sale_reports == 'odoo_standard':
                             pdf = self.env.ref('sale.action_report_saleorder').sudo().render_qweb_pdf([i.id])[0]
                             pdf = base64.b64encode(pdf)
                             attachments = [('%s.pdf' % i.name, pdf)]
+                            res[res_ids[0]]['attachments'] = False
                             res[res_ids[0]]['attachments'] = attachments
 
         return res
