@@ -1,0 +1,29 @@
+<odoo>
+<data>
+<record id="base_document_layout_inherit_form" model="ir.ui.view">
+	<field name="name">base.document.layout.inherit.form</field>
+	<field name="model">base.document.layout</field>
+	<field name="inherit_id" ref="base.view_base_document_layout" />
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='logo']" position="after">
+			<field name="company_watermark" widget="image" force_save="1"/>
+		</xpath>
+		<xpath expr="//button[@class='btn btn-link']" position="after">
+<!--			<label for="rpt_primary_color" string="Report Colors"/>-->
+			<div class="o_document_layout_report_colors">
+				<field name="rpt_primary_color" widget="color" class="mb-4"/>
+				<field name="rpt_secondary_color" widget="color" class="mb-4"/>
+			</div>
+		</xpath>
+
+<!--			<xpath expr="//field[@name='logo']" position="after">-->
+<!--			<label for="rpt_primary_color" string="Report Colors"/>-->
+<!--			<div class="o_document_layout_report_colors">-->
+<!--				<field name="rpt_primary_color" widget="color" class="mb-4"/>-->
+<!--				<field name="rpt_secondary_color" widget="color" class="mb-4"/>-->
+<!--			</div>-->
+<!--		</xpath>-->
+	</field>
+</record>
+</data>
+</odoo>

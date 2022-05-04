@@ -1,0 +1,439 @@
+<odoo>
+    <data>
+
+        <template id="statement_report_pdf">
+            <t t-call="web.html_container">
+                <t t-call="loyal_account_statement_report.external_layout_statement">
+
+                    <div class="page">
+                        <!--                        <br/>-->
+                        <style type="text/css">
+                            .tdCenter{
+                            text-align:center;padding: 5px;font-size: 12px;
+                            }
+                            .tdLeft{
+                            text-align:left;padding: 5px;font-size: 12px;
+                            }
+                            .tdRight{
+                            text-align:right;padding: 5px; font-size: 12px;
+                            }
+                            .tdstyle{
+                            text-weight:bold;border: 1px !important; border-style: solid !important; border-color: #fff
+                            !important;color:#fff !important;
+                            }
+                            .bold{font-weight: bold; }
+                            .line-height35{line-height: 35px;}
+                            .blue{ background-color: #c2c4db;color: black;}
+                            .bghead{background-color: #c1c3dd;color: black;}
+                            .bgcolor{background-color: #929393;color: #ffffff;}
+                            .tdblue{color: #13076e;}
+                            .tdred{color: red;}
+                            .tdgreen{color: green;}
+                            .tdblack{color: black;}
+                            #table2 table{
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                            }
+                            #table2 tr{
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                            }
+                            #table2 td{
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                            }
+                            #table2 th{
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                            }
+                            @font-face {
+                            font-family: 'Verdana';
+                            src: local('Verdana'), local('Verdana'),
+                            url(/loyal_account_statement_report/static/src/fonts/verdana.ttf') format('ttf');
+                            }
+                            .en-font {
+                            font-family: Verdana;
+                            }
+                            @font-face {
+                            font-family: 'Arial';
+                            src: local('Arial'), local('Arial'),
+                            url(/loyal_account_statement_report/static/src/fonts/arial.ttf') format('truetype');
+                            }
+                            .arabic-font {
+                            font-family: Arial;
+                            }
+                        </style>
+
+                        <div class="row">
+                            <div class="col-12 en-font" style="font-size : 16px;color:#000000" align="center">
+                                <b>
+
+                                    <t t-if="filter_account_type == 'receivable'">
+                                    <u>CUSTOMER STATEMENT OF ACCOUNT</u>
+                                    </t>
+                                    <t t-if="filter_account_type == 'payable'">
+                                    <u>VENDOR STATEMENT OF ACCOUNT</u>
+                                    </t>
+                                </b>
+                            </div>
+                        </div>
+                        <br/>
+
+
+                        <div class="row">
+                            <div class="col-12 en-font">
+                                <table style="font-size:12px;" width="100%">
+                                    <col style="width: 12%;"/>
+                                    <col style="width: 26%;"/>
+                                    <col style="width: 22%;"/>
+                                    <col style="width: 15%;"/>
+                                    <col style="width: 25%;"/>
+                                    <tr style="font-weight:bold;text-align:left;" class="en-font">
+                                        <td style="padding:5px;border:1px solid black;border-collapse: collapse;">
+                                             <t t-if="filter_account_type == 'receivable'">
+                                            Customer
+                                             </t>
+                                            <t t-if="filter_account_type == 'payable'">
+                                            Vendor
+                                             </t>
+                                        </td>
+                                        <td class="en-font" colspan="2"
+                                            style="padding:5px;border:1px solid black;border-collapse: collapse;">
+                                            <span t-esc="partner.name"/>
+                                        </td>
+
+                                        <td rowspan="3" class="en-font"
+                                            t-att-style="'font-size : 16px;vertical-align:middle;text-align:left;padding:5px;color:#fff !important;border-top:1px solid black;border-bottom:1px solid black;background-color: %s;' % company.rpt_primary_color">
+                                            Current Balance:
+                                        </td>
+
+                                        <td rowspan="3" class="en-font"
+                                            t-att-style="'font-size : 16px;vertical-align:middle;text-align:center;padding:5px;border-bottom:1px solid black;border-left:0px;border-top:1px solid black;border-right:1px solid black;border-collapse: collapse;color:#fff !important;background-color: %s;' % company.rpt_primary_color">
+                                            <t t-set="amount_res" t-value="0"/>
+                                            <t t-foreach="statements" t-as="line">
+                                                <tt class="tdRight">
+                                                    <t t-set="amount_res" t-value="amount_res + line['balance']"/>
+                                                </tt>
+                                            </t>
+
+                                                <t t-if="amount_res+initial_balance">
+                                                    <span t-esc="'{0:,.2f}'.format(float(amount_res+initial_balance))"/>
+                                                </t>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr style="font-weight:bold;text-align:left;" class="en-font">
+                                        <td style="padding:5px;border:1px solid black;border-collapse: collapse;">Period
+                                        </td>
+                                        <td colspan="2" class="bold"
+                                            style="padding:5px;border:1px solid black;border-collapse: collapse;">
+                                            <t t-if="date_from">
+                                                <span t-esc="datetime.datetime.strptime(str(date_from), '%Y-%m-%d').strftime('%d-%m-%Y')"/>
+                                                <t t-if="date_to">to
+                                                    <span t-esc="datetime.datetime.strptime(str(date_to), '%Y-%m-%d').strftime('%d-%m-%Y')"/>
+                                                </t>
+                                            </t>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr style="font-weight:bold;text-align:left;" class="en-font">
+                                        <td style="padding:5px;border:1px solid black;border-collapse: collapse;">Credit
+                                            Days
+                                        </td>
+                                        <td colspan="2" class="bold"
+                                            style="padding:5px;border:1px solid black;border-collapse: collapse;">
+                                            <span t-esc="credit_days"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12 en-font">
+                                <table id="table2" width="100%" border="0" style="font-size:11px;table-layout:fixed;"
+                                       class="table table-sm" cellspacing="0">
+                                    <col style="width: 12%;"/>
+                                    <col style="width: 13%;"/>
+                                    <col style="width: 10%;"/>
+                                    <col style="width: 15%;"/>
+                                    <col style="width: 13%;"/>
+                                    <col style="width: 15%;"/>
+                                    <col style="width: 10%;"/>
+                                    <col style="width: 12%;"/>
+
+                                    <thead>
+                                        <tr class="text-center en-font" style="border:0"
+                                            t-att-style="'background-color: %s;' % company.rpt_primary_color">
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle; ">Invoice Date
+                                            </th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">Invoice No</th>
+                                            <!--                                            <th class="tdCenter" style="vertical-align: middle;">DN No.</th>-->
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">
+                                                  <t t-if="filter_account_type == 'receivable'">
+                                                   SO No.
+                                                  </t>
+                                                <t t-if="filter_account_type == 'payable'">
+                                                   PO No.
+                                                  </t>
+                                            </th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">
+                                                <t t-if="filter_account_type == 'receivable'">
+                                                   Invoice Amount
+                                                   (SAR)
+                                                  </t>
+                                                <t t-if="filter_account_type == 'payable'">
+                                                   Bill Amount
+                                                   (SAR)
+                                                  </t>
+
+                                            </th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">Paid Amount
+                                                (SAR)
+                                            </th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">Balance Amount
+                                                (SAR)
+                                            </th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">Aging Days</th>
+                                            <th class="tdCenter tdstyle" style="vertical-align: middle;">Actual Due
+                                                date
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="debittotal" t-value="0"/>
+                                        <t t-set="credittotal" t-value="0"/>
+                                        <t t-set="balance" t-value="0"/>
+                                        <t t-set="amount_balance" t-value="0"/>
+                                        <t t-set="invoicetotal" t-value="0"/>
+                                        <t t-set="amount_partial" t-value="0"/>
+                                        <tr class="en-font"
+                                            t-att-style="'background-color: %s;' % company.rpt_secondary_color">
+                                            <td colspan="5" class="tdRight bold ">PREVIOUS BALANCE TILL THE DATE
+                                                <span class="tdRight bold " t-esc="datetime.datetime.strptime(str(previous_date), '%Y-%m-%d').strftime('%d-%m-%Y')"/>
+
+                                            </td>
+                                            <td class="tdRight bold ">
+                                                <t t-if="initial_balance">
+                                                    <span t-esc="'{0:,.2f}'.format(float(initial_balance))"/>
+                                                </t>
+                                            </td>
+                                            <td class="tdRight bold "></td>
+                                            <td class="tdRight bold "></td>
+
+                                        </tr>
+                                        <tr class="en-font" t-foreach="statements" t-as="line">
+                                            <td class="tdCenter">
+                                                <t t-if="line['date']">
+                                                    <span t-esc="line['date'].strftime('%d-%b-%Y')"/>
+                                                </t>
+                                            </td>
+                                            <td class="tdCenter">
+                                                <span t-if="line['invoice_no']" t-esc="line['invoice_no']"/>
+                                            </td>
+                                            <!--                                            <td class="tdLeft">-->
+                                            <!--                                                <span t-if="line['del_no']" t-esc="line['del_no']"/>-->
+                                            <!--                                            </td>-->
+
+                                            <!--                                            <td class="tdCenter tdblue">-->
+                                            <!--                                                <span t-esc="line['cpo_reference']"/>-->
+                                            <!--                                            </td>-->
+                                            <td class="tdLeft">
+                                                <span t-if="line['po_no']" t-esc="line['po_no']"/>
+                                            </td>
+                                            <td class="tdRight">
+                                                <t t-if="line['debit']">
+                                                    <span t-esc="'{0:,.2f}'.format(float(line['debit']))"/>
+                                                </t>
+                                                <t t-if="not line['debit']">
+                                                    0.00
+                                                </t>
+                                                <t t-set="debittotal" t-value="debittotal + line['debit'] "/>
+                                            </td>
+
+                                            <td class="tdRight">
+                                                <t t-if="line['credit']">
+                                                    <span t-esc="'{0:,.2f}'.format(float(line['credit']))"/>
+                                                </t>
+                                                <t t-if="not line['credit']">
+                                                    0.00
+                                                </t>
+                                                <t t-set="credittotal" t-value="credittotal + line['credit']"/>
+                                            </td>
+                                            <td class="tdRight">
+                                                <t t-if="debittotal-credittotal+initial_balance">
+                                                    <span t-esc="'{0:,.2f}'.format(float((debittotal-credittotal+initial_balance)))"/>
+                                                </t>
+                                                <t t-set="balance" t-value="balance + line['balance']"/>
+                                            </td>
+                                            <td class="tdCenter">
+                                                <t t-if="line['aging_date']">
+                                                    <t t-set="cr" t-value="[]"/>
+                                                    <t t-if="credit_days">
+                                                        <t t-set="cr"
+                                                           t-value="[int(word) for word in credit_days.split() if word.isnumeric()]"/>
+                                                        <t t-if="cr">
+                                                            <t t-if="line['aging_date']&gt;cr[0]">
+                                                                <span class="tdCenter tdred">
+                                                                    <t t-if="line['aging_date']&gt;0">
+                                                                        <t t-esc="line['aging_date']"/>
+                                                                    </t>
+                                                                </span>
+                                                            </t>
+
+                                                            <t t-if="line['aging_date']&lt;cr[0]">
+                                                                <span class="tdCenter tdgreen">
+                                                                    <t t-if="line['aging_date']&gt;0">
+                                                                        <t t-esc="line['aging_date']"/>
+                                                                    </t>
+                                                                </span>
+                                                            </t>
+
+                                                            <t t-if="line['aging_date']==cr[0]">
+                                                                <span class="tdCenter tdblack">
+                                                                    <t t-if="line['aging_date']&gt;0">
+                                                                        <t t-esc="line['aging_date']"/>
+                                                                    </t>
+                                                                </span>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="not cr">
+                                                        <span class="tdCenter">
+                                                            <t t-if="line['aging_date']&gt;0">
+                                                                <t t-esc="line['aging_date']"/>
+                                                            </t>
+                                                        </span>
+                                                    </t>
+                                                </t>
+                                            </td>
+
+                                            <td class="tdCenter">
+                                                <t t-if="line['due']">
+                                                    <span t-esc="line['due'].strftime('%d-%b-%Y')"/>
+                                                </t>
+                                            </td>
+
+                                        </tr>
+                                        <tr class="en-font" t-att-style="'background-color: %s;' % company.rpt_primary_color">
+                                            <td class="tdCenter bold " style="color:#fff">Grand Total</td>
+                                            <td class="tdRight bold " colspan="2"></td>
+                                            <td class="tdRight bold " style="color:#fff;font-weight: 900;">
+                                                <t t-if="debittotal">
+                                                    <span t-esc="'{0:,.2f}'.format(float(debittotal))"/>
+                                                </t>
+                                            </td>
+                                            <td class="tdRight bold " style="color:#fff;font-weight: 900;">
+                                                <t t-if="credittotal">
+                                                    <span t-esc="'{0:,.2f}'.format(float(credittotal))"/>
+                                                </t>
+                                            </td>
+                                            <td class="tdRight bold " style="color:#fff;font-weight: 900;">
+                                                <t t-if="balance+initial_balance">
+                                                    <span t-esc="'{0:,.2f}'.format(float(balance+initial_balance))"/>
+                                                </t>
+                                            </td>
+                                            <td class="tdRight bold "></td>
+                                            <td class="tdRight bold "></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row en-font">
+                            <div style="font-size:12px;" class="col-5 en-font">
+                                <b>Accounts Dept.________________________</b>
+                            </div>
+                            <div class="col-3 en-font">
+                            </div>
+                            <div style="font-size:12px;" class="col-4 en-font">
+                                <b>Finance Dept.________________________</b>
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+
+                        <div class="row">
+                            <div class="col-12 en-font">
+                                <table width="100%" style="font-size:12px;">
+                                    <col style="width: 36%;"/>
+                                    <col style="width: 24%;"/>
+                                    <col style="width: 40%;"/>
+                                    <thead>
+                                        <tr t-att-style="'font-weight:bold;text-align:center;color: black;background-color: %s;' % company.rpt_primary_color">
+                                            <td class="tdCenter tdstyle">
+                                                Bank Name
+                                            </td>
+                                            <td class="tdCenter tdstyle">
+                                                Account No.
+                                            </td>
+                                            <td class="tdCenter tdstyle">
+                                                IBAN / IFSC Code
+                                            </td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr style="font-weight:bold;" t-foreach="bank_details.partner_id.bank_ids"
+                                            t-as="com">
+                                            <td
+                                                style="text-align:left;padding:2px;border:1px solid black;border-collapse: collapse;">
+                                               <div style="width:100%">
+                                                   <span style="font-size: 12px;float:left;text-align:left;width:50%;">
+                                                            <span t-esc="com.bank_id.name"/>
+                                                    </span>
+                                                    <span style="font-size: 12px;float:left;text-align:right;width:50%;">
+                                                            <span class="arabic-font" t-esc="com.bank_id.name_arabic"/>
+
+                                                    </span>
+
+                                               </div>
+
+
+
+                                            </td>
+                                            <td
+                                                style="text-align:center;padding:2px;border:1px solid black;border-collapse: collapse;">
+                                                 <div style="width:100%">
+                                                   <span style="font-size: 12px;float:left;text-align:center;width:100%;">
+                                                            <span t-esc="com.acc_number"/>
+                                                    </span>
+                                               </div>
+
+                                            </td>
+                                            <td
+                                                style="text-align:center;padding:2px;border:1px solid black;border-collapse: collapse;">
+                                              <div style="width:100%">
+                                                   <span style="font-size: 12px;float:left;text-align:center;width:100%;">
+                                                            <span t-esc="com.bank_id.bic"/>
+                                                    </span>
+                                               </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </t>
+            </t>
+
+        </template>
+    </data>
+
+</odoo>
