@@ -32,7 +32,7 @@
         'views/walco_invoices_temp_without_header.xml',
         'views/invoice_menu_without_header.xml',
     ],
-    # only loaded in demonstration mode
+    # only loaded in demonstration model
     'demo': [
         'demo/demo.xml',
     ],
